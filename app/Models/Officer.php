@@ -43,4 +43,9 @@ class Officer extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+		public function visitor()
+    {
+			return $this->hasMany(Visitor::class, 'officer_id', 'id');
+    }
 }

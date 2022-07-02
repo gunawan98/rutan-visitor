@@ -10,7 +10,7 @@ use App\Http\Controllers\Officer\Auth\RegisteredUserController;
 use App\Http\Controllers\Officer\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['guest:officer'], 'prefix'=>'officer', 'as'=>'officer'], function() {
+Route::group(['middleware' => ['guest:officer'], 'prefix'=>'officer', 'as'=>'officer.'], function() {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
@@ -34,7 +34,7 @@ Route::group(['middleware' => ['guest:officer'], 'prefix'=>'officer', 'as'=>'off
                 ->name('password.update');
 });
 
-Route::group(['middleware' => ['auth:officer'], 'prefix'=>'officer', 'as'=>'officer'], function() {
+Route::group(['middleware' => ['auth:officer'], 'prefix'=>'officer', 'as'=>'officer.'], function() {
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
                 ->name('verification.notice');
 

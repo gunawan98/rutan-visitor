@@ -1,0 +1,16 @@
+>>> CREATE MIGRATION
+php artisan make:migration create_namatabel_table
+
+>>> PERINTAH MIGRATION
+php artisan migrate (untuk migrasi pembuatan tabel)
+
+php artisan migrate:refresh (jika anda mengupdate migrasi di project)
+
+php artisan migrate:refresh --seed (update sekaligus update sample data)
+
+
+>>> PERINTAH SEEDER ATAU DATA SEMENTARA
+php artisan make:seeder NamaSeeder (create seeder)
+
+>>> CREATE MODEL
+php artisan make:model NamaModel
