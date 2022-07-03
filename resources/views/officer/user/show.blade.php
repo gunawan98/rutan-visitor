@@ -36,9 +36,9 @@
 			<div class="row">
 					<div class="col-12 mb-4">
 							<div class="card shadow border-0 text-center p-0">
-									<div class="profile-cover rounded-top" data-background="../assets/img/profile-cover.jpg"></div>
+									<div class="profile-cover rounded-top" data-background="{{asset('template/assets/img/profile-cover.jpg') }}"></div>
 									<div class="card-body pb-5">
-											<img src="../assets/img/team/profile-picture-1.jpg" class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
+											<img src="{{asset('template/assets/img/team/profile-picture-1.jpg') }}" class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
 											<h4 class="h3">Neil Sims</h4>
 											<h5 class="fw-normal">Senior Software Engineer</h5>
 											<p class="text-gray mb-4">New York, USA</p>
