@@ -59,6 +59,11 @@
         <div class="multi-level collapse  show "
           role="list" id="submenu-app" aria-expanded="false">
           <ul class="flex-column nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('officer.user.create') }}">
+                <span class="sidebar-text">Pendaftaran</span>
+              </a>
+            </li>
             <li class="nav-item  active ">
               <a class="nav-link" href="{{ route('officer.user.index') }}">
                 <span class="sidebar-text">Data Pengguna</span>

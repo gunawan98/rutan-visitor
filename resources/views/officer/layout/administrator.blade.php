@@ -25,6 +25,8 @@
 <!-- Volt CSS -->
 <link type="text/css" href="{{ asset('template/css/volt.css') }}" rel="stylesheet">
 
+@stack('on-head')
+
 </head>
 
 <body>        
@@ -104,7 +106,18 @@
 <!-- Volt JS -->
 <script src="{{ asset('template/assets/js/volt.js') }}"></script>
 
-    
+<script>
+	const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+					confirmButton: 'btn btn-primary',
+					cancelButton: 'btn btn-gray'
+			},
+			buttonsStyling: false
+	});
+</script>
+
+@stack('after-script')
+
 </body>
 
 </html>
