@@ -158,6 +158,7 @@ class UserController extends Controller
 				$user = User::findOrFail($id);
 
 				if ($user){
+					File::delete('uploads/file_kk/'.$user->file_kk);
 					$user->delete();
 
 					return response()->json(array('success' => true));

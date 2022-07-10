@@ -42,10 +42,10 @@
           <span class="mt-1 ms-1 sidebar-text">Volt Overview</span>
         </a>
       </li>
+
       <li class="nav-item">
         <span
-          class="nav-link  d-flex justify-content-between align-items-center"
-          data-bs-toggle="collapse" data-bs-target="#submenu-app">
+          class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#user-menu">
           <span>
             <span class="sidebar-icon">
               <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd"></path></svg>
@@ -56,17 +56,74 @@
             <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
           </span>
         </span>
-        <div class="multi-level collapse  show "
-          role="list" id="submenu-app" aria-expanded="false">
+        <div class="multi-level collapse {{ (request()->is('officer/user*')) ? 'show' : '' }}"
+          role="list" id="user-menu" aria-expanded="false">
           <ul class="flex-column nav">
-            <li class="nav-item">
+            <li class="nav-item {{ (Request::route()->getName() == 'officer.user.create') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('officer.user.create') }}">
                 <span class="sidebar-text">Pendaftaran</span>
               </a>
             </li>
-            <li class="nav-item  active ">
+            <li class="nav-item {{ (Request::route()->getName() == 'officer.user.index') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('officer.user.index') }}">
                 <span class="sidebar-text">Data Pengguna</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <span
+          class="nav-link  d-flex justify-content-between align-items-center"
+          data-bs-toggle="collapse" data-bs-target="#criminal-menu">
+          <span>
+            <span class="sidebar-icon">
+              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd"></path></svg>
+            </span> 
+            <span class="sidebar-text">Kriminal</span>
+          </span>
+          <span class="link-arrow">
+            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+          </span>
+        </span>
+        <div class="multi-level collapse {{ (request()->is('officer/criminal*')) ? 'show' : '' }}"
+          role="list" id="criminal-menu" aria-expanded="false">
+          <ul class="flex-column nav">
+            <li class="nav-item {{ (Request::route()->getName() == 'officer.criminal.create') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.criminal.create') }}">
+                <span class="sidebar-text">Input baru</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (Request::route()->getName() == 'officer.criminal.index') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.criminal.index') }}">
+                <span class="sidebar-text">Data</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <span
+          class="nav-link  d-flex justify-content-between align-items-center text-secondary"
+          data-bs-toggle="collapse" data-bs-target="#service-menu">
+          <span>
+            <span class="sidebar-icon">
+              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
+            </span> 
+            <span class="sidebar-text">Pelayanan</span>
+          </span>
+          <span class="link-arrow">
+            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+          </span>
+        </span>
+        <div class="multi-level collapse {{ (request()->is('officer/criminal*')) ? 'show' : '' }}"
+          role="list" id="service-menu" aria-expanded="false">
+          <ul class="flex-column nav">
+            <li class="nav-item {{ (Request::route()->getName() == 'officer.criminal.create') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.criminal.create') }}">
+                <span class="sidebar-text">Kunjungan</span>
               </a>
             </li>
           </ul>
