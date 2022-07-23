@@ -10,7 +10,7 @@ class Visitor extends Model
     use HasFactory;
 
 		protected $fillable = [
-			'officer_id', 'user_id', 'criminal_id', 'jmh_pengikut_laki', 'jmh_pengikut_perempuan', 'jmh_pengikut_anak', 'no_antrian', 'jam_kunjungan'
+			'officer_id', 'user_id', 'criminal_id', 'jmh_pengikut_laki', 'jmh_pengikut_perempuan', 'jmh_pengikut_anak', 'no_antrian', 'tanggal_kunjungan', 'jam_kunjungan'
 		];
 
 		public function officer()

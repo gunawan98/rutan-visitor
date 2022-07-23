@@ -1,6 +1,6 @@
 @extends('officer.layout.administrator')
 
-@section('title','Admin - Manajemen Data User')
+@section('title','Admin - Manajemen Data Pengunjung')
 
 @section('content')
 
@@ -13,13 +13,21 @@
 								</a>
 						</li>
 						<li class="breadcrumb-item"><a href="{{route('officer.dashboard')}}">Dashboard</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Data Pengguna</li>
+						<li class="breadcrumb-item active" aria-current="page">Data Kunjungan</li>
 				</ol>
 		</nav>
 		<div class="d-flex justify-content-between w-100 flex-wrap">
 				<div class="mb-3 mb-lg-0">
-						<h1 class="h4">Informasi Pengguna Akun</h1>
-						<p class="mb-0">Klik tombol detail untuk melihat lebih lanjut.</p>
+						<h1 class="h4">Bootstrap tables</h1>
+						<p class="mb-0">Untuk memfilter data silahkan pilih filter pada tombol sebelah kanan.</p>
+				</div>
+				<div>
+					<div class="mb-3">
+						<label class="my-1 me-8" for="user_id"></label>
+						<select class="form-select @error('user_id') is-invalid @enderror" id="user_id" name="user_id" aria-label="Default select example">
+							<option value="">Hari ini</option>
+						</select>
+					</div>
 				</div>
 		</div>
 </div>
@@ -31,34 +39,50 @@
 								<thead class="thead-light">
 										<tr>
 												<th class="border-0 rounded-start">#</th>
-												<th class="border-0">Nama</th>
-												<th class="border-0">Alamat</th>
-												<th class="border-0">No. Telepon</th>
+												<th class="border-0">Nama Akun</th>
+												<th class="border-0">Kriminal</th>
+												<th class="border-0">Pengikut Pria</th>
+												<th class="border-0">Pengikut Wanita</th>
+												<th class="border-0">Pengikut Anak</th>
+												<th class="border-0">No. Antrian</th>
+												<th class="border-0">Jam Kunjungan</th>
 												<th class="border-0"></th>
 										</tr>
 								</thead>
 								<tbody>
-									@foreach ($data_users as $data)
+									@foreach ($data_kunjungan as $data)
 									<tr>
 											<td>{{ $loop->iteration }}</td>
 											<td class="fw-bold align-items-center">
 													<svg class="icon icon-xxs text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-													{{$data->name}}
+													{{$data->user->name}}
 											</td>
 											<td>
-													{{$data->alamat}}
+													{{$data->criminal->name}}
 											</td>
 											<td>
-												<a class="small fw-bold" href="#">{{ $data->no_telepon }}</a>
+												{{ $data->jmh_pengikut_laki }}
 											</td>
-											<td class="text-success">
+											<td>
+												{{ $data->jmh_pengikut_perempuan }}
+											</td>
+											<td>
+												{{ $data->jmh_pengikut_anak }}
+											</td>
+											<td>
+												{{ $data->no_antrian }}
+											</td>
+											<td>
+												{{ $data->jam_kunjungan }}
+											</td>
+											<!-- <td class="text-success">
 												<a href="{{route('officer.user.show', $data->id)}}">
 													<button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
 															<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
 															Detail
 													</button>
 												</a>
-											</td>
+											</td> -->
 									</tr>
 									@endforeach
 								</tbody>

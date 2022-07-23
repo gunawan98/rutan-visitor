@@ -25,11 +25,11 @@ return new class extends Migration
 						$table->foreignId('criminal_id')->nullable();
             $table->foreign('criminal_id')->references('id')->on('criminals')->onDelete('cascade');
 
-						$table->integer('jmh_pengikut_laki');
-						$table->integer('jmh_pengikut_perempuan');
-						$table->integer('jmh_pengikut_anak');
+						$table->integer('jmh_pengikut_laki')->nullable();
+						$table->integer('jmh_pengikut_perempuan')->nullable();
+						$table->integer('jmh_pengikut_anak')->nullable();
 						$table->integer('no_antrian');
-						$table->string('jam_kunjungan');
+						$table->string('jam_kunjungan')->nullable();
             $table->timestamps();
         });
     }

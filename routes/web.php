@@ -1,18 +1,35 @@
 <?php
 
 use App\Http\Controllers\Officer\CriminalController;
+use App\Http\Controllers\Officer\MainController;
 use App\Http\Controllers\Officer\UserController;
 use App\Http\Controllers\Officer\VisitorController;
+use App\Http\Controllers\User\HistoryController;
+use App\Http\Controllers\User\InformationController;
+use App\Http\Controllers\User\KunjunganController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-	return 'ini aku broo';
-    // return view('welcome');
+    return redirect(route('dashboard.index'));
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+//////////////////////////////////////
+// Route USER mulai dari bawah sini --------------
+//////////////////////////////////////
+Route::group(['middleware' => ['auth']], function() {
+	Route::get('dashboard', [InformationController::class, 'index'])->name('dashboard.index');
+
+	Route::get('pendaftaran', [KunjunganController::class, 'index'])->name('kunjungan.index');
+	Route::get('get_kriminal/{criminal}', [KunjunganController::class, 'get_kriminal'])->name('kunjungan.filter.kriminal'); // Menampilkan data kriminal ketika user daftar kunjungan
+	Route::post('pendaftaran', [KunjunganController::class, 'daftar_kunjungan'])->name('kunjungan.store');
+	
+	Route::get('history', [HistoryController::class, 'index'])->name('history.index');
+
+});
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
@@ -23,9 +40,7 @@ require __DIR__.'/auth.php';
 require __DIR__.'/officerauth.php';
 
 Route::group(['middleware' => ['auth:officer'], 'prefix'=>'officer'], function() {
-	Route::get('dashboard',  function(){
-		return view('officer.dashboard');
-	})->name('officer.dashboard');
+	Route::get('dashboard', [MainController::class, 'index'])->name('officer.dashboard');
 
 	Route::resource('user', UserController::class, ['as'=>'officer']);
 
