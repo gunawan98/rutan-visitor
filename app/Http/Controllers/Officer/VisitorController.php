@@ -6,16 +6,36 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Yajra\DataTables\Facades\DataTables;
 
 class VisitorController extends Controller
 {
     public function index()
     {
+			$tes = Visitor::where('tanggal_kunjungan', date('Y-m-d', strtotime("26/07/2022")))->get();
 			$data_kunjungan = Visitor::with(['user','criminal'])->orderBy('id', 'DESC')->get();
       return view('officer.visitor.index', compact('data_kunjungan'));
     }
+
+		public function getVisitors(Request $request)
+		{
+			if ($request->ajax()) {
+				$data = Visitor::with(['user','criminal'])->get();
+				return DataTables::of($data)
+						->addIndexColumn()
+						->addColumn('user', function ($item) {
+							return $item->user->name;
+						})
+						->addColumn('criminal', function ($item) {
+							return $item->criminal->name;
+						})
+						->addColumn('action', function($row){
+								$actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+								return $actionBtn;
+						})
+						->rawColumns(['action'])
+						->make(true);
+			}
+		}
 
 }

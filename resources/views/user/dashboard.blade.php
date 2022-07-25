@@ -11,7 +11,7 @@
 	<div class="card border-0 shadow mb-4">
 			<div class="card-body">
 
-			<h4>Informasi Pengunjung Pada Tahanan</h4>
+			<h4>Informasi Pengunjung Tipe Tahanan</h4>
 			<p></p>
 			<ul class="timeline">
 				@foreach ($inf_tahanan as $key => $data)
@@ -44,7 +44,7 @@
 	<div class="card border-0 shadow mb-4">
 			<div class="card-body">
 
-			<h4>Informasi Pengunjung Pada Pidana</h4>
+			<h4>Informasi Pengunjung Tipe Narapidana</h4>
 			<p></p>
 			<ul class="timeline">
 				@foreach ($inf_pidana as $key => $data)

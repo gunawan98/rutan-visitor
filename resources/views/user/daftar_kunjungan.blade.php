@@ -2,8 +2,20 @@
 
 @section('title','Rutan Visitors Web App')
 
-@section('content')
+@if(session('error'))
+@push('scripts')
+<script>
+	swalWithBootstrapButtons.fire({
+		icon: 'warning',
+		title: 'Peringatan',
+		text: `{{Session::get('error')}}`,
+		showConfirmButton: true,
+	});
+</script>
+@endpush
+@endif
 
+@section('content')
 <div class="row">
 		<div class="col-12 mb-8">
 				<div class="card border-0 shadow components-section">
@@ -85,7 +97,7 @@
 												<div class="mb-3 d-grid">
 													<button type="submit" class="btn btn-sm btn-secondary align-items-center">
 														<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-														Simpan
+														Daftar
 													</button>
 												</div>
 
@@ -152,6 +164,7 @@
 																	<h2 class="h5">Preview File KTP <span class="text-muted" style="font-weight: 400;">No. <span id="ktp-kriminal">-</span></span></h2> 
 																	<div class="d-flex align-items-center">
 																		<div class="mx-auto">
+																			<img class="rounded" id="preview-ktp" src="" alt="File KTP Tidak Ditemukan" height="200px">
 																		</div>
 																	</div> 
                                    
@@ -165,7 +178,6 @@
 				</div>
 		</div>
 </div>
-
 @endsection
 
 @push('scripts')
@@ -187,6 +199,7 @@
 					document.getElementById("kasus-kriminal").innerHTML = data.kasus;
 					document.getElementById("hubungan-kriminal").innerHTML = data.hubungan;
 					document.getElementById("ktp-kriminal").innerHTML = data.no_nik;
+					document.getElementById('preview-ktp').src=`{{url('uploads/file_ktp/${data.file_ktp}')}}`;
 				}
 			});
 				

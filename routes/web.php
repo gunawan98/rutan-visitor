@@ -27,10 +27,6 @@ Route::group(['middleware' => ['auth']], function() {
 
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
-
 require __DIR__.'/auth.php';
 
 //////////////////////////////////////
@@ -52,6 +48,7 @@ Route::group(['middleware' => ['auth:officer'], 'prefix'=>'officer'], function()
 	Route::delete('criminal/{criminal}', [CriminalController::class, 'destroy'])->name('officer.criminal.destroy');
 
 	Route::get('visitor', [VisitorController::class, 'index'])->name('officer.visitor.index');
+	Route::get('visitor/list', [VisitorController::class, 'getVisitors'])->name('officer.visitor.list');
 
 });
 

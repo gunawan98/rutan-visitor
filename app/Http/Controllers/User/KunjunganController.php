@@ -43,54 +43,133 @@ class KunjunganController extends Controller
 					if ($get_day == 'Mon' || $get_day == 'Wed') {
 						$input_date = date('Y-m-d', strtotime($date));
 						$cek_first_data = Visitor::whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
-						$cek_duplicate_data = Visitor::where('user_id', Auth::id())->whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
+						$cek_duplicate_data = Visitor::where('user_id', Auth::id())->whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar jika lebih sekali dalam mendaftar
+						$cek_kapasitas = Visitor::with('criminal')
+																			->whereHas('criminal', function ($query) {
+																					$query->where('tipe', "tahanan");
+																			})
+																			->whereDate('tanggal_kunjungan', $input_date)
+																			->count(); //Batasi pengunjung
 						
-						if ($cek_duplicate_data->isEmpty()) {
-							if ($cek_first_data->isEmpty()) {
-
-								$visitor = new Visitor();
-								$visitor->officer_id = 1;
-								$visitor->user_id = Auth::id();
-								$visitor->criminal_id = $request->criminal_id;
-								$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
-								$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
-								$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
-								$visitor->no_antrian = 1;
-								$visitor->tanggal_kunjungan = date("Y-m-d 09:00:00", strtotime($date));
-								$visitor->jam_kunjungan = 'beta';
-								$visitor->save();
-
-								return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
-
-							} else {
-								dd('ada data');
-							}
+						if ($cek_kapasitas == 36) {
+							return redirect()->route('kunjungan.index')->with('error','Kapasitas pengunjung pada tanggal tesebut sudah penuh. Mohon untuk mengganti tanggal kunjungan anda. ');
 						} else {
-							dd('User tidak boleh daftar lebih dari sekali dalam sehari');
+							if ($cek_duplicate_data->isEmpty()) {
+								if ($cek_first_data->isEmpty()) {
+	
+									$visitor = new Visitor();
+									$visitor->officer_id = 1;
+									$visitor->user_id = Auth::id();
+									$visitor->criminal_id = $request->criminal_id;
+									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
+									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
+									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
+									$visitor->no_antrian = 1;
+									$visitor->tanggal_kunjungan = date("Y-m-d 09:00:00", strtotime($date));
+									$visitor->save();
+	
+									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
+	
+								} else {
+									$last_visitor = Visitor::with('criminal')
+																					->whereHas('criminal', function ($query) {
+																							$query->where('tipe', "tahanan");
+																					})
+																					->whereDate('tanggal_kunjungan', $input_date)
+																					->orderBy('tanggal_kunjungan', 'desc')
+																					->first();
+									$no_antri = $last_visitor->no_antrian + 1;
+									
+									$visitor = new Visitor();
+									$visitor->officer_id = 1;
+									$visitor->user_id = Auth::id();
+									$visitor->criminal_id = $request->criminal_id;
+									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
+									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
+									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
+									$visitor->no_antrian = $no_antri;
+									$visitor->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime($last_visitor->tanggal_kunjungan.'+ 5 minute'));
+									$visitor->save();
+	
+									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
+	
+								}
+							} else {
+								return redirect()->route('kunjungan.index')->with('error','User tidak boleh medaftar kunjungan lebih dari sekali dalam sehari. ');
+							}
 						}
-						
-						
+
 					}else{
-						dd('no');
+						return redirect()->route('kunjungan.index')->with('error','Pendaftaran kunjungan bagi status TAHANAN hanya terjadwal pada hari Senin dan Rabu.');
 					}
 				}
 
 				if ($criminal->tipe == 'pidana') {
 					if ($get_day == 'Tue' || $get_day == 'Thu') {
-						dd('yes');
+						$input_date = date('Y-m-d', strtotime($date));
+						$cek_first_data = Visitor::whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
+						$cek_duplicate_data = Visitor::where('user_id', Auth::id())->whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
+						$cek_kapasitas = Visitor::with('criminal')
+																			->whereHas('criminal', function ($query) {
+																					$query->where('tipe', "pidana");
+																			})
+																			->whereDate('tanggal_kunjungan', $input_date)
+																			->count(); //Batasi pengunjung
+						if ($cek_kapasitas == 36) {
+							return redirect()->route('kunjungan.index')->with('error','Kapasitas pengunjung pada tanggal tesebut sudah penuh. Mohon untuk mengganti tanggal kunjungan anda. ');
+						} else {
+							if ($cek_duplicate_data->isEmpty()) {
+								if ($cek_first_data->isEmpty()) {
+	
+									$visitor = new Visitor();
+									$visitor->officer_id = 1;
+									$visitor->user_id = Auth::id();
+									$visitor->criminal_id = $request->criminal_id;
+									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
+									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
+									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
+									$visitor->no_antrian = 1;
+									$visitor->tanggal_kunjungan = date("Y-m-d 09:00:00", strtotime($date));
+									$visitor->save();
+	
+									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
+	
+								} else {
+									$last_visitor = Visitor::with('criminal')
+																					->whereHas('criminal', function ($query) {
+																							$query->where('tipe', "pidana");
+																					})
+																					->whereDate('tanggal_kunjungan', $input_date)
+																					->orderBy('tanggal_kunjungan', 'desc')
+																					->first();
+									$no_antri = $last_visitor->no_antrian + 1;
+									
+									$visitor = new Visitor();
+									$visitor->officer_id = 1;
+									$visitor->user_id = Auth::id();
+									$visitor->criminal_id = $request->criminal_id;
+									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
+									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
+									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
+									$visitor->no_antrian = $no_antri;
+									$visitor->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime($last_visitor->tanggal_kunjungan.'+ 5 minute'));
+									$visitor->save();
+	
+									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
+	
+								}
+							} else {
+								return redirect()->route('kunjungan.index')->with('error','User tidak boleh medaftar kunjungan lebih dari sekali dalam sehari. ');
+							}
+						}						
+
 					}else{
-						dd('no');
+						return redirect()->route('kunjungan.index')->with('error','Pendaftaran kunjungan bagi status PIDANA hanya terjadwal pada hari Selasa dan Kamis.');
 					}
 				}
-				
-				// if (($criminal->tipe == 'tahanan' && $get_day == 'Mon' || $get_day == 'Wed') || ($criminal->tipe == 'pidana' && $get_day == 'Tue' || $get_day == 'Thu')) {
-				// 	dd('terima');
-				// } else {
-				// 	dd('gagal');
-				// }				
 
 			}else{
-				dd('Tidak boleh');
+				return redirect()->route('kunjungan.index')->with('error','Tanggal kunjungan yang anda inputkan telah usai. Mohon mendaftar pada hari berikutnya.');
 			}
 
 		}

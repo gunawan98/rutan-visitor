@@ -20,12 +20,4 @@ class HistoryController extends Controller
 			$historys = Visitor::with('criminal')->where('user_id', Auth::id())->get();
 			return view('user.history', compact('historys'));
 		}
-
-		public function get_kriminal($id)
-		{
-			$criminal  = Criminal::find($id);
-
-			return response()->json($criminal);
-		}
-
 }
