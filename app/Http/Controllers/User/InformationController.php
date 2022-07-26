@@ -22,7 +22,6 @@ class InformationController extends Controller
 																	$query->where('tipe', "tahanan");
 															})
 															->where('tanggal_kunjungan', '>', now())
-															->orderBy('created_at', 'DESC')
 															->get()
 															->groupBy(function ($val) {
 																return Carbon::parse($val->tanggal_kunjungan)->format('Y-m-d');
@@ -33,7 +32,6 @@ class InformationController extends Controller
 																	$query->where('tipe', "pidana");
 															})
 															->where('tanggal_kunjungan', '>', now())
-															->orderBy('created_at', 'DESC')
 															->get()
 															->groupBy(function ($val) {
 																return Carbon::parse($val->tanggal_kunjungan)->format('Y-m-d');
