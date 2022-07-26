@@ -76,7 +76,7 @@
 									box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 								"
 							>
-								<h1>5</h1>
+								<h1>{{$history->no_antrian}}</h1>
 							</div>
 							<p class="text-danger mt-5"><small><em>NB: Harap hadir sebelum waktu nomor antrian</em></small></p>
 						</div>

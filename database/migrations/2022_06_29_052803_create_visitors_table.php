@@ -29,7 +29,6 @@ return new class extends Migration
 						$table->integer('jmh_pengikut_perempuan')->nullable();
 						$table->integer('jmh_pengikut_anak')->nullable();
 						$table->integer('no_antrian');
-						$table->string('jam_kunjungan')->nullable();
             $table->timestamps();
         });
     }

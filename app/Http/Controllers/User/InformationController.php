@@ -22,16 +22,22 @@ class InformationController extends Controller
 																	$query->where('tipe', "tahanan");
 															})
 															->where('tanggal_kunjungan', '>', now())
+															->orderBy('created_at', 'DESC')
 															->get()
-															->groupBy('tanggal_kunjungan');
+															->groupBy(function ($val) {
+																return Carbon::parse($val->tanggal_kunjungan)->format('Y-m-d');
+															});
+															// ->orderBy('tanggal_kunjungan', 'desc');
 			$inf_pidana = Visitor::with(['user','criminal'])
 															->whereHas('criminal', function ($query) {
 																	$query->where('tipe', "pidana");
 															})
 															->where('tanggal_kunjungan', '>', now())
+															->orderBy('created_at', 'DESC')
 															->get()
-															->groupBy('tanggal_kunjungan');
-															// dd($inf_tahanan);
+															->groupBy(function ($val) {
+																return Carbon::parse($val->tanggal_kunjungan)->format('Y-m-d');
+															});
 			return view('user.dashboard', compact('inf_tahanan','inf_pidana'));
 		}
 

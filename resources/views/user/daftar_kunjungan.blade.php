@@ -63,7 +63,7 @@
 																	</span>
 																	<input type="text" class="form-control @error('jmh_pengikut_laki') is-invalid @enderror" name="jmh_pengikut_laki" value="{{ old('jmh_pengikut_laki') }}" aria-label="jmh_pengikut_laki">
 																	@error('jmh_pengikut_laki')
-																	<div class="invalid-feedback">{{ $message }}</div>
+																		<div class="invalid-feedback">{{ $message }}</div>
 																	@enderror
 																</div>
 														</div>

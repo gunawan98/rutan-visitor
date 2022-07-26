@@ -31,6 +31,14 @@ class KunjunganController extends Controller
 
 		public function daftar_kunjungan(Request $request)
 		{
+			$request->validate([
+				'tanggal_kunjungan' => ['required', 'date'],
+				'criminal_id' => ['required', 'integer'],
+				'jmh_pengikut_laki' => ['nullable','numeric'],
+				'jmh_pengikut_perempuan' => ['nullable','numeric'],
+				'jmh_pengikut_anak' => ['nullable','numeric'],
+			]);
+
 			$date_now = date("m/d/Y");
 
 			$criminal = Criminal::find($request->criminal_id);

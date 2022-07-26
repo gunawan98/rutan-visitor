@@ -37,7 +37,7 @@
       <li class="nav-item">
         <a href="{{route('officer.dashboard')}}" class="nav-link d-flex align-items-center">
           <span class="sidebar-icon">
-            <img src="{{asset('template/assets/img/logo-polri.png')}}" height="20" width="20" alt="Volt Logo">
+            <img src="{{asset('template/assets/img/Logo_lapas.png')}}" height="20" width="20" alt="Volt Logo">
           </span>
           <span class="mt-1 ms-1 sidebar-text">Rutan Kraksaan</span>
         </a>
@@ -134,9 +134,14 @@
         <div class="multi-level collapse {{ (request()->is('officer/visitor*')) ? 'show' : '' }}"
           role="list" id="service-menu" aria-expanded="false">
           <ul class="flex-column nav">
-            <li class="nav-item {{ (Request::route()->getName() == 'officer.visitor.index') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('officer.visitor.index') }}">
-                <span class="sidebar-text">Kunjungan</span>
+            <li class="nav-item {{ (Request::route()->getName() == 'officer.visitor.tahanan') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.visitor.tahanan') }}">
+                <span class="sidebar-text">Kunjungan Tahanan</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (Request::route()->getName() == 'officer.visitor.pidana') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.visitor.pidana') }}">
+                <span class="sidebar-text">Kunjungan Pidana</span>
               </a>
             </li>
           </ul>

@@ -47,8 +47,8 @@ Route::group(['middleware' => ['auth:officer'], 'prefix'=>'officer'], function()
 	Route::get('criminal/{criminal}', [CriminalController::class, 'show'])->name('officer.criminal.show');
 	Route::delete('criminal/{criminal}', [CriminalController::class, 'destroy'])->name('officer.criminal.destroy');
 
-	Route::get('visitor', [VisitorController::class, 'index'])->name('officer.visitor.index');
-	Route::get('visitor/list', [VisitorController::class, 'getVisitors'])->name('officer.visitor.list');
+	Route::get('visitor/tahanan', [VisitorController::class, 'tahanan'])->name('officer.visitor.tahanan');
+	Route::get('visitor/pidana', [VisitorController::class, 'pidana'])->name('officer.visitor.pidana');
 
 });
 

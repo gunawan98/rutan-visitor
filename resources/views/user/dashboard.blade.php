@@ -14,9 +14,15 @@
 			<h4>Informasi Pengunjung Tipe Tahanan</h4>
 			<p></p>
 			<ul class="timeline">
-				@foreach ($inf_tahanan as $key => $data)
+				@forelse ($inf_tahanan as $key => $data)
 					<li class="timeline-item mb-5">
-						<p class="text-muted mb-2 fw-bold">{{date('d-m-Y', strtotime($key))}}</p>
+						<p class="text-muted mb-2 fw-bold">
+							@php
+								$day = array("Mon"=>"Senin","Tue"=>"Selasa","Wed"=>"Rabu","Thu"=>"Kamis");
+								echo $day[date('D', strtotime($key))].", ";
+							@endphp
+							{{date('d-m-Y', strtotime($key))}}
+						</p>
 						
 						@foreach ($data as $list)
 							<div class="row">
@@ -33,7 +39,9 @@
 							</div>
 						@endforeach
 					</li>
-				@endforeach
+					@empty
+					<h6 class="text-muted">Belum ada data terdaftar.</h6>
+				@endforelse
 			</ul>	
 				
 			</div>
@@ -47,9 +55,15 @@
 			<h4>Informasi Pengunjung Tipe Narapidana</h4>
 			<p></p>
 			<ul class="timeline">
-				@foreach ($inf_pidana as $key => $data)
+				@forelse ($inf_pidana as $key => $data)
 					<li class="timeline-item mb-5">
-						<p class="text-muted mb-2 fw-bold">{{date('d-m-Y', strtotime($key))}}</p>
+						<p class="text-muted mb-2 fw-bold">
+							@php
+								$day = array("Mon"=>"Senin","Tue"=>"Selasa","Wed"=>"Rabu","Thu"=>"Kamis");
+								echo $day[date('D', strtotime($key))].", ";
+							@endphp
+							{{date('d-m-Y', strtotime($key))}}
+						</p>
 						
 						@foreach ($data as $list)
 							<div class="row">
@@ -66,7 +80,9 @@
 							</div>
 						@endforeach
 					</li>
-				@endforeach
+					@empty
+					<h6 class="text-muted">Belum ada data terdaftar.</h6>
+				@endforelse
 			</ul>	
 				
 			</div>
