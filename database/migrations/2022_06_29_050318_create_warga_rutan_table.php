@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('criminals', function (Blueprint $table) {
+        Schema::create('warga_rutan', function (Blueprint $table) {
             $table->id();
 
 						$table->foreignId('user_id')->nullable();
@@ -24,7 +24,8 @@ return new class extends Migration
 						$table->string('kasus');
 						$table->string('no_nik')->unique();
 						$table->string('hubungan');
-						$table->string('file_ktp');
+						$table->string('file_ktp')->nullable();
+						$table->string('file_foto')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('criminals');
+        Schema::dropIfExists('warga_rutan');
     }
 };

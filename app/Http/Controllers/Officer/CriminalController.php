@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Officer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Criminal;
 use App\Models\User;
+use App\Models\WargaRutan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +14,7 @@ class CriminalController extends Controller
 {
     public function index()
     {
-			$data_criminal = Criminal::orderBy('id', 'DESC')->get();
+			$data_criminal = WargaRutan::orderBy('id', 'DESC')->get();
       return view('officer.criminal.index', compact('data_criminal'));
     }
 
@@ -31,24 +31,33 @@ class CriminalController extends Controller
 				'name' => ['required', 'regex:/^[a-zA-Z ]+$/'],
 				'tipe' => ['required', 'in:pidana,tahanan'],
 				'kasus' => 'required',
-				'no_nik' => ['required', 'numeric', 'digits:16', 'unique:criminals'],
+				'no_nik' => ['required', 'numeric', 'digits:16', 'unique:warga_rutan'],
 				'hubungan' => 'required',
-				'file_ktp' => 'required',
 			]);
 
-			$file = request()->file('file_ktp');
-			$extension = $file->getClientOriginalExtension();
-			$fileName = time(). "." .$extension;
-			$file->move(public_path().'/uploads/file_ktp/', $fileName);    
+			if ($request->hasFile('file_ktp')) {
+				$file = request()->file('file_ktp');
+				$extension = $file->getClientOriginalExtension();
+				$fileNameKTP = time(). "." .$extension;
+				$file->move(public_path().'/uploads/file_ktp/', $fileNameKTP);    
+			}
 
-			$criminal = new Criminal();
+			if ($request->hasFile('file_foto')) {
+				$file = request()->file('file_foto');
+				$extension = $file->getClientOriginalExtension();
+				$fileNameFoto = time(). "." .$extension;
+				$file->move(public_path().'/uploads/file_foto/', $fileNameFoto);    
+			}
+
+			$criminal = new WargaRutan();
 			$criminal->user_id = $request->user_id;
 			$criminal->name = $request->name;
 			$criminal->tipe = $request->tipe;
 			$criminal->kasus = $request->kasus;
 			$criminal->no_nik = $request->no_nik;
 			$criminal->hubungan = $request->hubungan;
-			$criminal->file_ktp = $fileName;
+			$criminal->file_ktp = $fileNameKTP;
+			$criminal->file_foto = $fileNameFoto;
 			$criminal->save();
 
 			return redirect()->route('officer.criminal.create')->with('status','Data berhasil di simpan... ');
@@ -56,7 +65,7 @@ class CriminalController extends Controller
 
     public function show($id)
     {
-			$data_criminal = Criminal::with('user')->get()->find($id);
+			$data_criminal = WargaRutan::with('user')->get()->find($id);
 			$data_user = User::select('id','name','no_telepon')->get();
 
       return view('officer.criminal.show', compact('data_criminal','data_user'));
@@ -69,16 +78,16 @@ class CriminalController extends Controller
 				'name' => ['required', 'regex:/^[a-zA-Z ]+$/'],
 				'tipe' => ['required', 'in:pidana,tahanan'],
 				'kasus' => 'required',
-				'no_nik' => 'required|numeric|digits:16|unique:criminals,no_nik,'.$id,
+				'no_nik' => 'required|numeric|digits:16|unique:warga_rutan,no_nik,'.$id,
 				'hubungan' => 'required'
 			]);
 
-			$cek_data = Criminal::where('id', $id)->first();
+			$cek_data = WargaRutan::where('id', $id)->first();
 
 			if ($cek_data === null) {
 				return redirect()->back()->with(['warning' => 'Data tidak ditemukan.']);
 			} else {
-				$data = Criminal::find($id);
+				$data = WargaRutan::find($id);
 				$data->user_id = $request->user_id;
 				$data->name = $request->name;
 				$data->tipe = $request->tipe;
@@ -87,15 +96,25 @@ class CriminalController extends Controller
 				$data->hubungan = $request->hubungan;
 
 				if ($request->hasFile('file_ktp')) {
-					// dd($data->file_ktp);
 					File::delete('uploads/file_ktp/'.$data->file_ktp);
 					
 					$file = $request->file('file_ktp');
 					$extension = $file->getClientOriginalExtension();
-					$fileName = time(). "." .$extension;
-					$file->move(public_path().'/uploads/file_ktp/', $fileName); 
+					$fileNameKTP = time(). "." .$extension;
+					$file->move(public_path().'/uploads/file_ktp/', $fileNameKTP); 
 							
-					$data->file_ktp = $fileName;
+					$data->file_ktp = $fileNameKTP;
+				}
+
+				if ($request->hasFile('file_foto')) {
+					File::delete('uploads/file_foto/'.$data->file_foto);
+					
+					$file = $request->file('file_foto');
+					$extension = $file->getClientOriginalExtension();
+					$fileNameFoto = time(). "." .$extension;
+					$file->move(public_path().'/uploads/file_foto/', $fileNameFoto); 
+							
+					$data->file_foto = $fileNameFoto;
 				}
 				
 				$data->save();
@@ -108,7 +127,7 @@ class CriminalController extends Controller
     {
 			if ($request->ajax()){
 
-				$criminal = Criminal::findOrFail($id);
+				$criminal = WargaRutan::findOrFail($id);
 
 				if ($criminal){
 					File::delete('uploads/file_ktp/'.$criminal->file_ktp);

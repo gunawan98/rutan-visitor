@@ -51,10 +51,8 @@
 												<th class="border-0">Tanggal</th>
 												<th class="border-0">Jam</th>
 												<th class="border-0">Nama Akun</th>
-												<th class="border-0">Kriminal</th>
-												<th class="border-0">Pengikut Pria</th>
-												<th class="border-0">Pengikut Wanita</th>
-												<th class="border-0">Pengikut Anak</th>
+												<th class="border-0">Warga Rutan</th>
+												<th class="border-0"></th>
 										</tr>
 								</thead>
 								<tbody>
@@ -80,25 +78,16 @@
 													{{$data->user->name}}
 											</td>
 											<td>
-													{{$data->criminal->name}}
+													{{$data->warga_rutan->name}}
 											</td>
-											<td class="text-center">
-												{{ $data->jmh_pengikut_laki }}
-											</td>
-											<td class="text-center">
-												{{ $data->jmh_pengikut_perempuan }}
-											</td>
-											<td class="text-center">
-												{{ $data->jmh_pengikut_anak }}
-											</td>
-											<!-- <td class="text-success">
+											<td class="text-success">
 												<a href="{{route('officer.user.show', $data->id)}}">
 													<button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
 															<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
 															Detail
 													</button>
 												</a>
-											</td> -->
+											</td>
 									</tr>
 									@endforeach
 								</tbody>

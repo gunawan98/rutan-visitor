@@ -88,6 +88,14 @@
 																	@enderror
 															</div>
 
+															<div class="mb-3">
+																	<label for="file_foto" class="form-label">Foto</label>
+																	<input class="form-control @error('file_foto') is-invalid @enderror" type="file" id="file_foto" name="file_foto">
+																	@error('file_foto')
+																		<div class="invalid-feedback">{{ $message }}</div>
+																	@enderror
+															</div>
+
 															<div class="mb-3 @error('tipe') text-danger @enderror">
 																	<label for="tipe">Tipe</label>
 																	<br>
@@ -161,36 +169,47 @@
 			<div class="row">
 					<div class="col-12 mb-4">
 						<div class="card card-body border-0 shadow mb-4">
-							<div class="row pb-2 g-0">
-								<div class="col-sm-6 col-md-4 fw-bolder">Nama</div>
-								<div class="col-6 col-md-8">: {{$data_criminal->name}}</div>
-							</div>
-							<div class="row pb-2 g-0">
-								<div class="col-sm-6 col-md-4 fw-bolder">Tipe</div>
-								<div class="col-6 col-md-8">: {{$data_criminal->tipe}}</div>
-							</div>
-							<div class="row pb-2 g-0 pb-3" style="border-bottom: 1px dashed gray;">
-								<div class="col-sm-6 col-md-4 fw-bolder">Kasus</div>
-								<div class="col-6 col-md-8">: {{$data_criminal->kasus}}</div>
-							</div>
-							<div class="row pb-2 g-0 pt-2">
-								<div class="col-sm-6 col-md-4 fw-bolder">Nama Akun Saudara</div>
-								<div class="col-6 col-md-8">: {{$data_criminal->user->name}}</div>
-							</div>
-							<div class="row pb-2 g-0">
-								<div class="col-sm-6 col-md-4 fw-bolder">Email</div>
-								<div class="col-6 col-md-8">: {{$data_criminal->user->email}}</div>
-							</div>
-							<div class="row pb-2 g-0">
-								<div class="col-sm-6 col-md-4 fw-bolder">Nomor Telepon</div>
-								<div class="col-6 col-md-8">: {{$data_criminal->user->no_telepon}}</div>
-							</div>
-							<div class="row pb-2 g-0">
-								<div class="col-sm-6 col-md-4 fw-bolder">Hubungan Keluarga</div>
-								<div class="col-6 col-md-8">: {{$data_criminal->hubungan}}</div>
+							<div class="row">
+								<div class="col-8">
+									<div class="row pb-2 g-0">
+										<div class="col-sm-6 col-md-4 fw-bolder">Nama</div>
+										<div class="col-6 col-md-8">: {{$data_criminal->name}}</div>
+									</div>
+									<div class="row pb-2 g-0">
+										<div class="col-sm-6 col-md-4 fw-bolder">Tipe</div>
+										<div class="col-6 col-md-8">: {{$data_criminal->tipe}}</div>
+									</div>
+									<div class="row pb-2 g-0 pb-3" style="border-bottom: 1px dashed gray;">
+										<div class="col-sm-6 col-md-4 fw-bolder">Kasus</div>
+										<div class="col-6 col-md-8">: {{$data_criminal->kasus}}</div>
+									</div>
+									<div class="row pb-2 g-0 pt-2">
+										<div class="col-sm-6 col-md-4 fw-bolder">Nama Akun Keluarga</div>
+										<div class="col-6 col-md-8">: {{$data_criminal->user->name}}</div>
+									</div>
+									<div class="row pb-2 g-0">
+										<div class="col-sm-6 col-md-4 fw-bolder">Email</div>
+										<div class="col-6 col-md-8">: {{$data_criminal->user->email}}</div>
+									</div>
+									<div class="row pb-2 g-0">
+										<div class="col-sm-6 col-md-4 fw-bolder">Nomor Telepon</div>
+										<div class="col-6 col-md-8">: {{$data_criminal->user->no_telepon}}</div>
+									</div>
+									<div class="row pb-2 g-0">
+										<div class="col-sm-6 col-md-4 fw-bolder">Hubungan Keluarga</div>
+										<div class="col-6 col-md-8">: {{$data_criminal->hubungan}}</div>
+									</div>
+								</div>
+
+								<div class="col-4">
+									@if ($data_criminal->file_foto)
+										<img src="{{url('uploads/file_foto/'.$data_criminal->file_foto)}}" height="200px">
+									@endif
+								</div>
 							</div>
 						</div>
 					</div>
+
 					<div class="col-12">
 							<div class="card card-body border-0 shadow mb-4">
 									<h2 class="h5">Preview File Nomor KK. <span class="text-muted" style="font-weight: 400;">{{$data_criminal->user->no_kk}}</span></h2> 

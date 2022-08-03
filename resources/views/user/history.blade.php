@@ -47,19 +47,19 @@
 							<h5 class="card-title">Target Kunjungan</h5>
 							<div class="row pb-2 g-0">
 								<p class="fw-bolder">Nama</p>
-								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->criminal->name}}</em></span>
+								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->warga_rutan->name}}</em></span>
 							</div>
 							<div class="row pb-2 g-0">
 								<p class="fw-bolder">Tipe</p>
-								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->criminal->tipe}}</em></span>
+								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->warga_rutan->tipe}}</em></span>
 							</div>
 							<div class="row pb-2 g-0">
 								<p class="fw-bolder">Kasus</p>
-								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->criminal->kasus}}</em></span>
+								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->warga_rutan->kasus}}</em></span>
 							</div>
 							<div class="row pb-2 g-0">
 								<p class="fw-bolder">Hubungan</p>
-								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->criminal->hubungan}}</em></span>
+								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->warga_rutan->hubungan}}</em></span>
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -79,6 +79,7 @@
 								<h1>{{$history->no_antrian}}</h1>
 							</div>
 							<p class="text-danger mt-5"><small><em>NB: Harap hadir sebelum waktu nomor antrian</em></small></p>
+							<p class="text-primary"><small>Petugas: {{$history->petugas->name}}</small></p>
 						</div>
 					</div>
 

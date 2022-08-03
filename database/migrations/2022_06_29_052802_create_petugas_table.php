@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('visitors', function (Blueprint $table) {
-					$table->timestamp('tanggal_kunjungan')->after('no_antrian');
+        Schema::create('petugas', function (Blueprint $table) {
+            $table->id();
+						$table->string('name');
+						$table->string('jabatan');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('visitors', function (Blueprint $table) {
-					$table->dropColumn('tanggal_kunjungan');
-        });
+        Schema::dropIfExists('petugas');
     }
 };

@@ -52,6 +52,18 @@
 
 												<div class="card border-1 shadow components-section">
 													<div class="card-body">
+														<div class="mb-5">
+																<label for="nama_pengunjung">Nama Pengunjung</label>
+																<div class="input-group">
+																	<span class="input-group-text" id="basic-addon1">
+																		<svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path></svg>
+																	</span>
+																	<input type="text" class="form-control @error('nama_pengunjung') is-invalid @enderror" name="nama_pengunjung" value="{{ old('nama_pengunjung') }}" aria-label="nama_pengunjung">
+																	@error('nama_pengunjung')
+																		<div class="invalid-feedback">{{ $message }}</div>
+																	@enderror
+																</div>
+														</div>
 														<div class="mb-1 text-end">
 															<h5>Jumlah Pengikut :</h5>
 														</div>
@@ -108,7 +120,7 @@
 													<div class="col-12 mb-4">
 														<div class="card card-body border-0 shadow mb-4">
 															<div class="row pb-2 g-0">
-																<div class="col-sm-12 col-md-12 fw-bolder"><h4>Data Pengunjung:</h4></div>
+																<div class="col-sm-12 col-md-12 fw-bolder"><h4>Akun:</h4></div>
 															</div>
 															<div class="row pb-2 g-0">
 																<div class="col-sm-6 col-md-4 fw-bolder">Nama</div>

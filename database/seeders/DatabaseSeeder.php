@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +17,7 @@ class DatabaseSeeder extends Seeder
 				OfficerSeeder::class,
 				UserSeeder::class,
 				CriminalSeeder::class,
+				PetugasSeeder::class,
 			]);
         // \App\Models\User::factory(10)->create();
 

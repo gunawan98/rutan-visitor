@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Officer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kunjungan;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,8 +12,8 @@ class VisitorController extends Controller
 {
     public function tahanan(Request $request)
     {
-			$date_draft = Visitor::with('criminal')
-														->whereHas('criminal', function ($query) {
+			$date_draft = Kunjungan::with('warga_rutan')
+														->whereHas('warga_rutan', function ($query) {
 																$query->where('tipe', "tahanan");
 														})
 														->where('tanggal_kunjungan', '>', now())
@@ -22,16 +23,16 @@ class VisitorController extends Controller
 														});
 
 			if ($request->filter) {
-				$data_kunjungan = Visitor::with(['user','criminal'])
-																	->whereHas('criminal', function ($query) {
+				$data_kunjungan = Kunjungan::with(['user','warga_rutan'])
+																	->whereHas('warga_rutan', function ($query) {
 																			$query->where('tipe', "tahanan");
 																	})
 																	->whereDate('tanggal_kunjungan', $request->filter)
 																	->orderBy('no_antrian', 'asc')
 																	->get();
 			} else {
-				$data_kunjungan = Visitor::with(['user','criminal'])
-																		->whereHas('criminal', function ($query) {
+				$data_kunjungan = Kunjungan::with(['user','warga_rutan'])
+																		->whereHas('warga_rutan', function ($query) {
 																				$query->where('tipe', "tahanan");
 																		})
 																		->orderBy('tanggal_kunjungan', 'DESC')
@@ -44,8 +45,8 @@ class VisitorController extends Controller
 
     public function pidana(Request $request)
     {
-			$date_draft = Visitor::with('criminal')
-														->whereHas('criminal', function ($query) {
+			$date_draft = Kunjungan::with('warga_rutan')
+														->whereHas('warga_rutan', function ($query) {
 																$query->where('tipe', "pidana");
 														})
 														->where('tanggal_kunjungan', '>', now())
@@ -55,16 +56,16 @@ class VisitorController extends Controller
 														});
 
 			if ($request->filter) {
-				$data_kunjungan = Visitor::with(['user','criminal'])
-																	->whereHas('criminal', function ($query) {
+				$data_kunjungan = Kunjungan::with(['user','warga_rutan'])
+																	->whereHas('warga_rutan', function ($query) {
 																			$query->where('tipe', "pidana");
 																	})
 																	->whereDate('tanggal_kunjungan', $request->filter)
 																	->orderBy('no_antrian', 'asc')
 																	->get();
 			} else {
-				$data_kunjungan = Visitor::with(['user','criminal'])
-																		->whereHas('criminal', function ($query) {
+				$data_kunjungan = Kunjungan::with(['user','warga_rutan'])
+																		->whereHas('warga_rutan', function ($query) {
 																				$query->where('tipe', "pidana");
 																		})
 																		->orderBy('tanggal_kunjungan', 'DESC')

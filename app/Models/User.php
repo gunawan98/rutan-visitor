@@ -47,13 +47,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-		public function criminal()
+		public function warga_rutan()
     {
-			return $this->hasMany(Criminal::class, 'user_id', 'id');
+			return $this->hasMany(WargaRutan::class, 'user_id', 'id');
     }
 
-		public function visitor()
+		public function kunjungan()
     {
-			return $this->hasMany(Visitor::class, 'user_id', 'id');
+			return $this->hasMany(Kunjungan::class, 'user_id', 'id');
     }
 }

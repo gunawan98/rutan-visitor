@@ -3,28 +3,25 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Criminal;
+use App\Models\JadwalJaga;
+use App\Models\Kunjungan;
 use App\Models\User;
-use App\Models\Visitor;
-use Carbon\Carbon;
+use App\Models\WargaRutan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 
 class KunjunganController extends Controller
 {
 		public function index()
 		{
 			$data_user = User::find(Auth::id());
-			$data_criminal = Criminal::where('user_id', Auth::id())->get();
+			$data_criminal = WargaRutan::where('user_id', Auth::id())->get();
 			return view('user.daftar_kunjungan', compact('data_user','data_criminal'));
 		}
 
 		public function get_kriminal($id)
 		{
-			$criminal  = Criminal::find($id);
+			$criminal  = WargaRutan::find($id);
 
 			return response()->json($criminal);
 		}
@@ -34,6 +31,7 @@ class KunjunganController extends Controller
 			$request->validate([
 				'tanggal_kunjungan' => ['required', 'date'],
 				'criminal_id' => ['required', 'integer'],
+				'nama_pengunjung' => ['required', 'regex:/^[a-zA-Z ]+$/'],
 				'jmh_pengikut_laki' => ['nullable','numeric'],
 				'jmh_pengikut_perempuan' => ['nullable','numeric'],
 				'jmh_pengikut_anak' => ['nullable','numeric'],
@@ -41,7 +39,7 @@ class KunjunganController extends Controller
 
 			$date_now = date("m/d/Y");
 
-			$criminal = Criminal::find($request->criminal_id);
+			$criminal = WargaRutan::find($request->criminal_id);
 
 			if ($date_now < $request->tanggal_kunjungan) {
 				$date = $request->tanggal_kunjungan;
@@ -50,10 +48,10 @@ class KunjunganController extends Controller
 				if ($criminal->tipe == 'tahanan') {
 					if ($get_day == 'Mon' || $get_day == 'Wed') {
 						$input_date = date('Y-m-d', strtotime($date));
-						$cek_first_data = Visitor::whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
-						$cek_duplicate_data = Visitor::where('user_id', Auth::id())->whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar jika lebih sekali dalam mendaftar
-						$cek_kapasitas = Visitor::with('criminal')
-																			->whereHas('criminal', function ($query) {
+						$cek_first_data = Kunjungan::whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
+						$cek_duplicate_data = Kunjungan::where('user_id', Auth::id())->whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar jika lebih sekali dalam mendaftar
+						$cek_kapasitas = Kunjungan::with('warga_rutan')
+																			->whereHas('warga_rutan', function ($query) {
 																					$query->where('tipe', "tahanan");
 																			})
 																			->whereDate('tanggal_kunjungan', $input_date)
@@ -63,12 +61,21 @@ class KunjunganController extends Controller
 							return redirect()->route('kunjungan.index')->with('error','Kapasitas pengunjung pada tanggal tesebut sudah penuh. Mohon untuk mengganti tanggal kunjungan anda. ');
 						} else {
 							if ($cek_duplicate_data->isEmpty()) {
+								$cek_petugas = '';
+								if ($get_day == 'Mon') {
+									$cek_petugas = JadwalJaga::where('hari', 'Mon')->first();
+								}
+								if ($get_day == 'Wed') {
+									$cek_petugas = JadwalJaga::where('hari', 'Wed')->first();
+								}
+								
 								if ($cek_first_data->isEmpty()) {
 	
-									$visitor = new Visitor();
-									$visitor->officer_id = 1;
+									$visitor = new Kunjungan();
+									$visitor->petugas_id = $cek_petugas->petugas_id;
 									$visitor->user_id = Auth::id();
-									$visitor->criminal_id = $request->criminal_id;
+									$visitor->warga_rutan_id = $request->criminal_id;
+									$visitor->nama_pengunjung = $request->nama_pengunjung;
 									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
 									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
 									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
@@ -79,8 +86,8 @@ class KunjunganController extends Controller
 									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
 	
 								} else {
-									$last_visitor = Visitor::with('criminal')
-																					->whereHas('criminal', function ($query) {
+									$last_visitor = Kunjungan::with('warga_rutan')
+																					->whereHas('warga_rutan', function ($query) {
 																							$query->where('tipe', "tahanan");
 																					})
 																					->whereDate('tanggal_kunjungan', $input_date)
@@ -88,10 +95,11 @@ class KunjunganController extends Controller
 																					->first();
 									$no_antri = $last_visitor->no_antrian + 1;
 									
-									$visitor = new Visitor();
-									$visitor->officer_id = 1;
+									$visitor = new Kunjungan();
+									$visitor->petugas_id = $cek_petugas->petugas_id;
 									$visitor->user_id = Auth::id();
-									$visitor->criminal_id = $request->criminal_id;
+									$visitor->warga_rutan_id = $request->criminal_id;
+									$visitor->nama_pengunjung = $request->nama_pengunjung;
 									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
 									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
 									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
@@ -102,6 +110,7 @@ class KunjunganController extends Controller
 									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
 	
 								}
+
 							} else {
 								return redirect()->route('kunjungan.index')->with('error','User tidak boleh medaftar kunjungan lebih dari sekali dalam sehari. ');
 							}
@@ -115,10 +124,10 @@ class KunjunganController extends Controller
 				if ($criminal->tipe == 'pidana') {
 					if ($get_day == 'Tue' || $get_day == 'Thu') {
 						$input_date = date('Y-m-d', strtotime($date));
-						$cek_first_data = Visitor::whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
-						$cek_duplicate_data = Visitor::where('user_id', Auth::id())->whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
-						$cek_kapasitas = Visitor::with('criminal')
-																			->whereHas('criminal', function ($query) {
+						$cek_first_data = Kunjungan::whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
+						$cek_duplicate_data = Kunjungan::where('user_id', Auth::id())->whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
+						$cek_kapasitas = Kunjungan::with('warga_rutan')
+																			->whereHas('warga_rutan', function ($query) {
 																					$query->where('tipe', "pidana");
 																			})
 																			->whereDate('tanggal_kunjungan', $input_date)
@@ -127,12 +136,21 @@ class KunjunganController extends Controller
 							return redirect()->route('kunjungan.index')->with('error','Kapasitas pengunjung pada tanggal tesebut sudah penuh. Mohon untuk mengganti tanggal kunjungan anda. ');
 						} else {
 							if ($cek_duplicate_data->isEmpty()) {
+								$cek_petugas = '';
+								if ($get_day == 'Tue') {
+									$cek_petugas = JadwalJaga::where('hari', 'Tue')->first();
+								}
+								if ($get_day == 'Thu') {
+									$cek_petugas = JadwalJaga::where('hari', 'Thu')->first();
+								}
+
 								if ($cek_first_data->isEmpty()) {
 	
-									$visitor = new Visitor();
-									$visitor->officer_id = 1;
+									$visitor = new Kunjungan();
+									$visitor->petugas_id = $cek_petugas->petugas_id;
 									$visitor->user_id = Auth::id();
-									$visitor->criminal_id = $request->criminal_id;
+									$visitor->warga_rutan_id = $request->criminal_id;
+									$visitor->nama_pengunjung = $request->nama_pengunjung;
 									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
 									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
 									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
@@ -143,8 +161,8 @@ class KunjunganController extends Controller
 									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
 	
 								} else {
-									$last_visitor = Visitor::with('criminal')
-																					->whereHas('criminal', function ($query) {
+									$last_visitor = Kunjungan::with('warga_rutan')
+																					->whereHas('warga_rutan', function ($query) {
 																							$query->where('tipe', "pidana");
 																					})
 																					->whereDate('tanggal_kunjungan', $input_date)
@@ -152,10 +170,11 @@ class KunjunganController extends Controller
 																					->first();
 									$no_antri = $last_visitor->no_antrian + 1;
 									
-									$visitor = new Visitor();
-									$visitor->officer_id = 1;
+									$visitor = new Kunjungan();
+									$visitor->petugas_id = $cek_petugas->petugas_id;
 									$visitor->user_id = Auth::id();
-									$visitor->criminal_id = $request->criminal_id;
+									$visitor->warga_rutan_id = $request->criminal_id;
+									$visitor->nama_pengunjung = $request->nama_pengunjung;
 									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
 									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
 									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;

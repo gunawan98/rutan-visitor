@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Officer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kunjungan;
 use App\Models\User;
-use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -81,7 +81,7 @@ class UserController extends Controller
     public function show($id)
     {
 			$data_user = User::findOrFail($id);
-			$count_kunjungan = Visitor::where('user_id', $id)->count();
+			$count_kunjungan = Kunjungan::where('user_id', $id)->count();
       return view('officer.user.show', compact('data_user','count_kunjungan'));
     }
 

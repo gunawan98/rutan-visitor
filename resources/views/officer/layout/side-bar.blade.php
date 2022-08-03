@@ -44,11 +44,11 @@
       </li>
 
       <li class="nav-item {{ (Request::route()->getName() == 'officer.dashboard') ? 'active' : '' }}">
-        <span class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#user-menu">
+        <span class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
           <span>
 						<a href="{{ route('officer.dashboard') }}">
 							<span class="sidebar-icon">
-								<svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path></svg>
+								<svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"></path></svg>
 							</span>
 							<span class="sidebar-text">Dashboard</span>
 						</a>
@@ -147,6 +147,34 @@
           </ul>
         </div>
       </li>
+
+			<li class="nav-item {{ (Request::route()->getName() == 'officer.jadwal-jaga') ? 'active' : '' }}">
+        <span class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
+          <span>
+						<a href="{{ route('officer.jadwal-jaga') }}">
+							<span class="sidebar-icon">
+								<svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+							</span>
+							<span class="sidebar-text">Jadwal Jaga</span>
+						</a>
+					</span>
+        </span>
+      </li>
+
+			<li class="nav-item {{ (Request::route()->getName() == 'officer.laporan') ? 'active' : '' }}">
+        <span class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
+          <span>
+						<a href="{{ route('officer.laporan') }}">
+							<span class="sidebar-icon">
+								<svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clip-rule="evenodd"></path></svg>
+							</span>
+							<span class="sidebar-text">Laporan</span>
+						</a>
+					</span>
+        </span>
+      </li>
+
     </ul>
   </div>
+
 </nav>

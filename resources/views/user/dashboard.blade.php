@@ -28,7 +28,7 @@
 							<div class="row">
 								<div class="col-4 ps-4">
 									<span class="text-danger">
-										{{date('H:i', strtotime($list->tanggal_kunjungan))}} - 00.00
+										{{date('H:i', strtotime($list->tanggal_kunjungan))}} - {{date('H:i', strtotime($list->tanggal_kunjungan.'+ 5 minute'))}}
 									</span>
 								</div>
 								<div class="col-8">
