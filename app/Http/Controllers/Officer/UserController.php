@@ -44,11 +44,13 @@ class UserController extends Controller
       // dd($request->all());
 			$request->validate([
 				'no_kk' => ['required', 'numeric', 'digits:16', 'unique:users'],
+				'no_nik' => ['required', 'numeric', 'digits:16', 'unique:users'],
 				'name' => ['required', 'regex:/^[a-zA-Z ]+$/'],
 				'jenis_kelamin' => ['required', 'in:laki-laki,perempuan'],
-				'no_telepon' => ['required', 'numeric', 'min:10', 'max:12', 'unique:users'],
+				'no_telepon' => ['required', 'numeric', 'unique:users'],
 				'alamat' => 'required',
 				'file_kk' => 'required',
+				'file_ktp' => 'required',
 				'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
 				'password' => ['required', 'confirmed', Rules\Password::defaults()],
 			]);
@@ -56,15 +58,22 @@ class UserController extends Controller
 			$file = request()->file('file_kk');
 			$extension = $file->getClientOriginalExtension();
 			$fileName = time(). "." .$extension;
-			$file->move(public_path().'/uploads/file_kk/', $fileName);    
+			$file->move(public_path().'/uploads/file_kk/', $fileName);   
+			 
+			$file_ktp = request()->file('file_ktp');
+			$extensionKtp = $file_ktp->getClientOriginalExtension();
+			$fileNameKtp = time(). "." .$extensionKtp;
+			$file_ktp->move(public_path().'/uploads/file_ktp_user/', $fileNameKtp);    
 
 			$user = new User();
 			$user->no_kk = $request->no_kk;
+			$user->no_nik = $request->no_nik;
 			$user->name = $request->name;
 			$user->jenis_kelamin = $request->jenis_kelamin;
 			$user->no_telepon = $request->no_telepon;
 			$user->alamat = $request->alamat;
 			$user->file_kk = $fileName;
+			$user->file_ktp = $fileNameKtp;
 			$user->email = $request->email;
 			$user->password = Hash::make($request->password);
 			$user->save();
@@ -107,9 +116,10 @@ class UserController extends Controller
     {
       $request->validate([
 				'no_kk' => 'required|numeric|digits:16|unique:users,no_kk,'.$id,
+				'no_nik' => 'required|numeric|digits:16|unique:users,no_nik,'.$id,
 				'name' => ['required', 'regex:/^[a-zA-Z ]+$/'],
 				'jenis_kelamin' => ['required', 'in:laki-laki,perempuan'],
-				// 'no_telepon' => 'required|numeric|between:10,12|unique:users,no_telepon,'.$id,
+				'no_telepon' => 'required|numeric|unique:users,no_telepon,'.$id,
 				'alamat' => 'required',
 				'email' => 'required|string|email|max:255|unique:users,email,'.$id
 			]);
@@ -130,7 +140,6 @@ class UserController extends Controller
 					$data->email = $request->email;
 
 					if ($request->hasFile('file_kk')) {
-						// dd($data->file_kk);
 						File::delete('uploads/file_kk/'.$data->file_kk);
             
             $file = $request->file('file_kk');
@@ -139,6 +148,17 @@ class UserController extends Controller
 						$file->move(public_path().'/uploads/file_kk/', $fileName); 
                
             $data->file_kk = $fileName;
+					}
+
+					if ($request->hasFile('file_ktp')) {
+						File::delete('uploads/file_ktp_user/'.$data->file_ktp);
+            
+            $file = $request->file('file_ktp');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time(). "." .$extension;
+						$file->move(public_path().'/uploads/file_ktp_user/', $fileName); 
+            
+            $data->file_ktp = $fileName;
 					}
 					
 					$data->save();
@@ -161,6 +181,7 @@ class UserController extends Controller
 
 				if ($user){
 					File::delete('uploads/file_kk/'.$user->file_kk);
+					File::delete('uploads/file_ktp_user/'.$user->file_ktp);
 					$user->delete();
 
 					return response()->json(array('success' => true));

@@ -72,6 +72,16 @@
 										</div>
 							</div>
 					</div>
+					<div class="col-12">
+							<div class="card card-body border-0 shadow mb-4">
+									<h2 class="h5 mb-4">Preview Data KK</h2>
+									<div class="d-flex align-items-center">
+											<div class="me-3">
+													<img class="rounded" src="{{url('uploads/file_ktp_user/'.$data_user->file_ktp)}}" alt="File KTP">
+											</div>
+										</div>
+							</div>
+					</div>
 			</div>
 	</div>
 	<div class="col-12 col-xl-1"></div>
@@ -162,6 +172,24 @@
 																<label for="file_kk" class="form-label">File KK</label>
 																<input class="form-control @error('file_kk') is-invalid @enderror" type="file" id="file_kk" name="file_kk">
 																@error('file_kk')
+																	<div class="invalid-feedback">{{ $message }}</div>
+																@enderror
+														</div>
+														
+														<div class="mb-3">
+																<label for="name">Nomor NIK</label>
+																<div class="input-group">
+																		<input type="text" class="form-control @error('no_nik') is-invalid @enderror" name="no_nik" value="{{$data_user->no_nik}}" aria-label="name">
+																		@error('no_nik')
+																			<div class="invalid-feedback">{{ $message }}</div>
+																		@enderror
+																</div>
+														</div>
+
+														<div class="mb-3">
+																<label for="file_ktp" class="form-label">File KTP</label>
+																<input class="form-control @error('file_ktp') is-invalid @enderror" type="file" id="file_ktp" name="file_ktp">
+																@error('file_ktp')
 																	<div class="invalid-feedback">{{ $message }}</div>
 																@enderror
 														</div>

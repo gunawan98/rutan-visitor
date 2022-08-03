@@ -179,6 +179,24 @@
 																@enderror
 														</div>
 
+														<div class="mb-3">
+																<label for="name">Nomor NIK</label>
+																<div class="input-group">
+																		<input type="text" class="form-control @error('no_nik') is-invalid @enderror" name="no_nik" value="{{ old('no_nik') }}" aria-label="no_nik">
+																</div>
+																@error('no_nik')
+																<div class="invalid-feedback">{{ $message }}</div>
+																@enderror
+														</div>
+
+														<div class="mb-3">
+																<label for="file_ktp" class="form-label">File KTP</label>
+																<input class="form-control @error('file_ktp') is-invalid @enderror" type="file" id="file_ktp" name="file_ktp">
+																@error('file_ktp')
+																<div class="invalid-feedback">{{ $message }}</div>
+																@enderror
+														</div>
+
 														<div class="mb-3 d-grid">
 															<button type="submit" class="btn btn-sm btn-secondary align-items-center">
 																<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>

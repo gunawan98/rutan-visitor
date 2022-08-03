@@ -19,11 +19,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'no_kk',
+        'no_nik',
         'name',
 				'jenis_kelamin',
 				'no_telepon',
 				'alamat',
 				'file_kk',
+				'file_ktp',
         'email',
         'password',
     ];

@@ -35,6 +35,7 @@ class CriminalController extends Controller
 				'hubungan' => 'required',
 			]);
 
+			$fileNameKTP = '';
 			if ($request->hasFile('file_ktp')) {
 				$file = request()->file('file_ktp');
 				$extension = $file->getClientOriginalExtension();
@@ -42,6 +43,7 @@ class CriminalController extends Controller
 				$file->move(public_path().'/uploads/file_ktp/', $fileNameKTP);    
 			}
 
+			$fileNameFoto = '';
 			if ($request->hasFile('file_foto')) {
 				$file = request()->file('file_foto');
 				$extension = $file->getClientOriginalExtension();
