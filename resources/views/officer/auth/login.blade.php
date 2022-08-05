@@ -51,11 +51,11 @@
 <div class="mt-3 mb-4 text-center">
 		<span class="fw-normal"></span>
 </div>
-<div class="d-flex justify-content-center align-items-center mt-4">
+<!-- <div class="d-flex justify-content-center align-items-center mt-4">
 		<span class="fw-normal">
 				Belum punya akun? 
 				<a href="{{ route('officer.register') }}" class="fw-bold">Link daftar.</a>
 		</span>
-</div>
+</div> -->
 
 @endsection

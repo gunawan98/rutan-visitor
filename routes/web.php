@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth:officer'], 'prefix'=>'officer'], function()
 
 	Route::get('visitor/tahanan', [VisitorController::class, 'tahanan'])->name('officer.visitor.tahanan');
 	Route::get('visitor/pidana', [VisitorController::class, 'pidana'])->name('officer.visitor.pidana');
+	Route::get('visitor/kunjungan/{id}', [VisitorController::class, 'detail_kunjungan'])->name('officer.visitor.kunjungan.detail');
 	
 	Route::get('jadwal-jaga', [MainController::class, 'jadwal_jaga'])->name('officer.jadwal-jaga');
 	Route::post('jadwal-jaga/create-jadwal', [MainController::class, 'create_jadwal'])->name('officer.jadwal.create');

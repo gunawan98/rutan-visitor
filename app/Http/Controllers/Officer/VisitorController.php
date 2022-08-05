@@ -43,6 +43,12 @@ class VisitorController extends Controller
       return view('officer.visitor.tahanan', compact('data_kunjungan','date_draft'));
     }
 
+		public function detail_kunjungan($id)
+		{
+			$kunjungan = Kunjungan::with(['petugas','user','warga_rutan'])->find($id);
+			return view('officer.visitor.detail_kunjungan', compact('kunjungan'));
+		}
+
     public function pidana(Request $request)
     {
 			$date_draft = Kunjungan::with('warga_rutan')
