@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
 				UserSeeder::class,
 				CriminalSeeder::class,
 				PetugasSeeder::class,
+				JadwalSeeder::class,
 			]);
         // \App\Models\User::factory(10)->create();
 
