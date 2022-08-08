@@ -13,13 +13,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jadwal_jaga', function (Blueprint $table) {
+        Schema::create('detail_syarat', function (Blueprint $table) {
             $table->id();
 
 						$table->foreignId('petugas_id')->nullable();
             $table->foreign('petugas_id')->references('id')->on('petugas')->onDelete('cascade');
+						
+						$table->foreignId('pengunjung_id')->nullable();
+            $table->foreign('pengunjung_id')->references('id')->on('pengunjung')->onDelete('cascade');
+						
+						$table->foreignId('jenis_syarat_id')->nullable();
+            $table->foreign('jenis_syarat_id')->references('id')->on('jenis_syarat')->onDelete('cascade');
 
-						$table->string('hari');
+						$table->timestamp('tanggal_verifikasi');
+
+						$table->string('file_syarat');
             $table->timestamps();
         });
     }
@@ -31,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jadwal_jaga');
+        Schema::dropIfExists('detail_syarat');
     }
 };

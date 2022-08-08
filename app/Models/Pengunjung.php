@@ -8,9 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class Pengunjung extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+		protected $table = 'pengunjung';
 
     /**
      * The attributes that are mass assignable.
@@ -18,16 +20,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'no_kk',
-        'no_nik',
-        'name',
+        'nik',
+        'nama',
 				'jenis_kelamin',
 				'no_telepon',
 				'alamat',
-				'file_kk',
-				'file_ktp',
         'email',
         'password',
+				'status'
     ];
 
     /**
@@ -49,13 +49,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-		public function warga_rutan()
+		public function detail_keluarga()
     {
-			return $this->hasMany(WargaRutan::class, 'user_id', 'id');
+			return $this->hasMany(DetailKeluarga::class, 'pengunjung_id', 'id');
+    }
+		
+		public function detail_kunjungan()
+    {
+			return $this->hasMany(DetailKunjungan::class, 'pengunjung_id', 'id');
     }
 
-		public function kunjungan()
-    {
-			return $this->hasMany(Kunjungan::class, 'user_id', 'id');
-    }
 }

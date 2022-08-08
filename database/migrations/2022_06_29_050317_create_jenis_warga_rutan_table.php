@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kunjungan', function (Blueprint $table) {
+        Schema::create('jenis_warga_rutan', function (Blueprint $table) {
             $table->id();
-
-						$table->foreignId('jadwal_kunjungan_id')->nullable();
-            $table->foreign('jadwal_kunjungan_id')->references('id')->on('jadwal_kunjungan')->onDelete('cascade');
-
-						$table->timestamp('tanggal_kunjungan');
+						$table->string('nama_jenis');
+						$table->enum('status', ['y', 't']);
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kunjungan');
+        Schema::dropIfExists('jenis_warga_rutan');
     }
 };

@@ -16,16 +16,16 @@ return new class extends Migration
         Schema::create('warga_rutan', function (Blueprint $table) {
             $table->id();
 
-						$table->foreignId('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+						$table->foreignId('jenis_warga_rutan_id')->nullable();
+            $table->foreign('jenis_warga_rutan_id')->references('id')->on('jenis_warga_rutan')->onDelete('cascade');
 
-						$table->string('name');
-						$table->enum('tipe', ['pidana', 'tahanan']);
+						$table->string('nik')->unique();
+						$table->string('nama');
+						$table->text('alamat');
+						$table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
+						$table->string('no_telepon');
 						$table->string('kasus');
-						$table->string('no_nik')->unique();
-						$table->string('hubungan');
-						$table->string('file_ktp')->nullable();
-						$table->string('file_foto')->nullable();
+						$table->enum('status', ['y', 't']);
             $table->timestamps();
         });
     }

@@ -56,122 +56,45 @@
         </span>
       </li>
 
-      <li class="nav-item">
-        <span
-          class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#user-menu">
-          <span>
-            <span class="sidebar-icon">
-              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path></svg>
-            </span> 
-            <span class="sidebar-text">Akun Pengguna</span>
-          </span>
-          <span class="link-arrow">
-            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-          </span>
-        </span>
-        <div class="multi-level collapse {{ (request()->is('officer/user*')) ? 'show' : '' }}"
-          role="list" id="user-menu" aria-expanded="false">
-          <ul class="flex-column nav">
-            <li class="nav-item {{ (Request::route()->getName() == 'officer.user.create') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('officer.user.create') }}">
-                <span class="sidebar-text">Pendaftaran</span>
-              </a>
-            </li>
-            <li class="nav-item {{ (Request::route()->getName() == 'officer.user.index') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('officer.user.index') }}">
-                <span class="sidebar-text">Data Pengguna</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-
-      <li class="nav-item">
+			<li class="nav-item">
         <span
           class="nav-link  d-flex justify-content-between align-items-center"
-          data-bs-toggle="collapse" data-bs-target="#criminal-menu">
+          data-bs-toggle="collapse" data-bs-target="#main-menu">
           <span>
             <span class="sidebar-icon">
               <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.788l1.599.799L9 4.323V3a1 1 0 011-1zm-5 8.274l-.818 2.552c.25.112.526.174.818.174.292 0 .569-.062.818-.174L5 10.274zm10 0l-.818 2.552c.25.112.526.174.818.174.292 0 .569-.062.818-.174L15 10.274z" clip-rule="evenodd"></path></svg>
             </span> 
-            <span class="sidebar-text">Kriminal</span>
+            <span class="sidebar-text">Main Data</span>
           </span>
           <span class="link-arrow">
             <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
           </span>
         </span>
-        <div class="multi-level collapse {{ (request()->is('officer/criminal*')) ? 'show' : '' }}"
-          role="list" id="criminal-menu" aria-expanded="false">
+        <div class="multi-level collapse {{ (request()->is('officer/data/*')) ? 'show' : '' }}"
+          role="list" id="main-menu" aria-expanded="false">
           <ul class="flex-column nav">
-            <li class="nav-item {{ (Request::route()->getName() == 'officer.criminal.create') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('officer.criminal.create') }}">
-                <span class="sidebar-text">Input baru</span>
+            <li class="nav-item {{ (request()->is('officer/data/pengunjung')) || (request()->is('officer/data/pengunjung/*')) ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.pengunjung.index') }}">
+                <span class="sidebar-text">Pengunjung</span>
               </a>
             </li>
-            <li class="nav-item {{ (Request::route()->getName() == 'officer.criminal.index') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('officer.criminal.index') }}">
-                <span class="sidebar-text">Data</span>
+            <li class="nav-item {{ (request()->is('officer/data/petugas')) || (request()->is('officer/data/petugas/*')) ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.petugas.index') }}">
+                <span class="sidebar-text">Petugas</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('officer/data/warga_rutan')) || (request()->is('officer/data/warga_rutan/*')) ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.warga_rutan.index') }}">
+                <span class="sidebar-text">Warga Rutan</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('officer/data/jadwal_kunjungan')) || (request()->is('officer/data/jadwal_kunjungan/*')) ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.jadwal_kunjungan.index') }}">
+                <span class="sidebar-text">Jadwal Kunjungan</span>
               </a>
             </li>
           </ul>
         </div>
-      </li>
-
-      <li class="nav-item">
-        <span
-          class="nav-link  d-flex justify-content-between align-items-center"
-          data-bs-toggle="collapse" data-bs-target="#service-menu">
-          <span>
-            <span class="sidebar-icon">
-              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
-            </span> 
-            <span class="sidebar-text">Pelayanan</span>
-          </span>
-          <span class="link-arrow">
-            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-          </span>
-        </span>
-        <div class="multi-level collapse {{ (request()->is('officer/visitor*')) ? 'show' : '' }}"
-          role="list" id="service-menu" aria-expanded="false">
-          <ul class="flex-column nav">
-            <li class="nav-item {{ (Request::route()->getName() == 'officer.visitor.tahanan') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('officer.visitor.tahanan') }}">
-                <span class="sidebar-text">Kunjungan Tahanan</span>
-              </a>
-            </li>
-            <li class="nav-item {{ (Request::route()->getName() == 'officer.visitor.pidana') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('officer.visitor.pidana') }}">
-                <span class="sidebar-text">Kunjungan Pidana</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-
-			<li class="nav-item {{ (Request::route()->getName() == 'officer.jadwal-jaga') ? 'active' : '' }}">
-        <span class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
-          <span>
-						<a href="{{ route('officer.jadwal-jaga') }}">
-							<span class="sidebar-icon">
-								<svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-							</span>
-							<span class="sidebar-text">Jadwal Jaga</span>
-						</a>
-					</span>
-        </span>
-      </li>
-
-			<li class="nav-item {{ (Request::route()->getName() == 'officer.laporan') ? 'active' : '' }}">
-        <span class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
-          <span>
-						<a href="{{ route('officer.laporan') }}">
-							<span class="sidebar-icon">
-								<svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clip-rule="evenodd"></path></svg>
-							</span>
-							<span class="sidebar-text">Laporan</span>
-						</a>
-					</span>
-        </span>
       </li>
 
     </ul>

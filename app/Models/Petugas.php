@@ -2,26 +2,58 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Petugas extends Model
+class Petugas extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
-		protected $table = 'petugas';
+		protected $guard = 'petugas';
 
-		protected $fillable = [
-			'name', 'jabatan',
-		];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'nama',
+        'alamat',
+        'no_telepon',
+        'email',
+        'password',
+    ];
 
-		public function kunjungan()
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+		public function jadwal_kunjungan()
     {
-			return $this->hasMany(Kunjungan::class, 'petugas_id', 'id');
+			return $this->hasMany(JadwalKunjungan::class, 'petugas_id', 'id');
+    }
+		
+		public function detail_syarat()
+    {
+			return $this->hasMany(DetailSyarat::class, 'petugas_id', 'id');
     }
 
-		public function jadwal_jaga()
-    {
-			return $this->hasMany(JadwalJaga::class, 'petugas_id', 'id');
-    }
 }

@@ -12,21 +12,16 @@ class Kunjungan extends Model
 		protected $table = 'kunjungan';
 
 		protected $fillable = [
-			'petugas_id', 'user_id', 'warga_rutan_id', 'nama_pengunjung', 'jmh_pengikut_laki', 'jmh_pengikut_perempuan', 'jmh_pengikut_anak', 'no_antrian', 'tanggal_kunjungan'
+			'jadwal_id', 'tanggal_kunjungan',
 		];
 
-		public function petugas()
+		public function detail_kunjungan()
     {
-        return $this->belongsTo(Petugas::class, 'petugas_id');
+			return $this->hasMany(DetailKunjungan::class, 'kunjungan_id', 'id');
     }
 
-		public function user()
+		public function jadwal_kunjungan()
     {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-		public function warga_rutan()
-    {
-        return $this->belongsTo(WargaRutan::class, 'warga_rutan_id');
+      return $this->belongsTo(JadwalKunjungan::class, 'jadwal_id');
     }
 }

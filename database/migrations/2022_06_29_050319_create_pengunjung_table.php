@@ -13,19 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('pengunjung', function (Blueprint $table) {
             $table->id();
-						$table->string('no_kk')->unique();
-						$table->string('no_nik')->unique();
-            $table->string('name');
+						$table->string('nik')->unique();
+            $table->string('nama');
 						$table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->string('no_telepon')->unique();
 						$table->text('alamat');
-						$table->string('file_kk');
-						$table->string('file_ktp');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+						$table->enum('status', ['y', 't']);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -38,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('pengunjung');
     }
 };

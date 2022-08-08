@@ -12,16 +12,16 @@ class WargaRutan extends Model
 		protected $table = 'warga_rutan';
 
 		protected $fillable = [
-			'user_id', 'name', 'tipe', 'kasus', 'no_nik', 'hubungan', 'file_ktp', 'file_foto'
+			'jenis_warga_rutan_id', 'nik', 'nama', 'alamat', 'jenis_kelamin', 'no_telepon', 'kasus', 'status'
 		];
 
-		public function user()
+		public function jenis_warga_rutan()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(JenisWargaRutan::class, 'jenis_warga_rutan_id');
     }
 
-		public function kunjungan()
+		public function detail_keluarga()
     {
-			return $this->hasMany(Kunjungan::class, 'warga_rutan_id', 'id');
+			return $this->hasMany(DetailKeluarga::class, 'warga_rutan_id', 'id');
     }
 }
