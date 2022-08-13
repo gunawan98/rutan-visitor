@@ -10,6 +10,7 @@ class DetailKeluarga extends Model
     use HasFactory;
 
 		protected $table = 'detail_keluarga';
+		protected $primaryKey = 'id_detail_keluarga';
 
 		protected $fillable = [
 			'id_pengunjung', 'id_warga_rutan', 'status_keluarga',

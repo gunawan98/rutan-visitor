@@ -4,14 +4,14 @@
 
 @section('content')
 
-<div class="row">
+<div class="row justify-content-md-center">
 
 
 <div class="col-xs-12 col-md-6">
 	<div class="card border-0 shadow mb-4">
 			<div class="card-body">
 
-			<h4>Informasi Pengunjung Tipe Tahanan</h4>
+			<h4>Informasi Antrian Pengunjung</h4>
 			<p></p>
 			<ul class="timeline">
 				@forelse ($inf_tahanan as $key => $data)
@@ -32,9 +32,14 @@
 									</span>
 								</div>
 								<div class="col-8">
-									<span class="text-muted">{{$list->detail_kunjungan->id_pengunjung}}</span>
-									<br>
-									<span class="text-muted" style="font-weight: 200;">{{$list->detail_kunjungan->id_pengunjung}}</span>
+									@foreach ($list->detail_kunjungan as $datakun)
+										
+									<div class="col-8">
+										<span class="text-muted">{{$datakun->pengunjung->nama_pengunjung}}</span>
+										<br>
+										<span class="text-muted" style="font-weight: 200;">{{$datakun->pengunjung->alamat}}</span>
+									</div>
+									@endforeach										
 								</div>
 							</div>
 						@endforeach

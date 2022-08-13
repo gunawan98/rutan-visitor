@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\DetailKeluarga;
+use App\Models\DetailKunjungan;
+use App\Models\DetailSyarat;
 use App\Models\JadwalJaga;
+use App\Models\JadwalKunjungan;
 use App\Models\Kunjungan;
 use App\Models\Pengunjung;
 use App\Models\WargaRutan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,8 +20,9 @@ class KunjunganController extends Controller
 		public function index()
 		{
 			$data_user = Pengunjung::find(Auth::id());
-			$data_criminal = WargaRutan::where('user_id', Auth::id())->get();
-			return view('user.daftar_kunjungan', compact('data_user','data_criminal'));
+			$data_criminal = DetailKeluarga::with('warga_rutan')->where('id_pengunjung', Auth::id())->get();
+			$cek_verify = DetailSyarat::where('id_pengunjung', Auth::id())->first();
+			return view('user.daftar_kunjungan', compact('data_user','data_criminal', 'cek_verify'));
 		}
 
 		public function get_kriminal($id)
@@ -31,81 +37,65 @@ class KunjunganController extends Controller
 			$request->validate([
 				'tanggal_kunjungan' => ['required', 'date'],
 				'criminal_id' => ['required', 'integer'],
-				'nama_pengunjung' => ['required', 'regex:/^[a-zA-Z ]+$/'],
-				'jmh_pengikut_laki' => ['nullable','numeric'],
-				'jmh_pengikut_perempuan' => ['nullable','numeric'],
-				'jmh_pengikut_anak' => ['nullable','numeric'],
 			]);
 
 			$date_now = date("m/d/Y");
 
-			$criminal = WargaRutan::find($request->criminal_id);
+			$criminal = WargaRutan::with('jenis_warga_rutan')->find($request->criminal_id);
 
 			if ($date_now < $request->tanggal_kunjungan) {
 				$date = $request->tanggal_kunjungan;
 				$get_day = date('D', strtotime($date));
 
-				if ($criminal->tipe == 'tahanan') {
+				if ($criminal->jenis_warga_rutan->nama_jenis == 'tahanan') {
 					if ($get_day == 'Mon' || $get_day == 'Wed') {
 						$input_date = date('Y-m-d', strtotime($date));
 						$cek_first_data = Kunjungan::whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
-						$cek_duplicate_data = Kunjungan::where('user_id', Auth::id())->whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar jika lebih sekali dalam mendaftar
-						$cek_kapasitas = Kunjungan::with('warga_rutan')
-																			->whereHas('warga_rutan', function ($query) {
-																					$query->where('tipe', "tahanan");
-																			})
-																			->whereDate('tanggal_kunjungan', $input_date)
-																			->count(); //Batasi pengunjung
+						$cek_duplicate_data = DetailKunjungan::where('id_pengunjung', Auth::id())																									
+																									->whereHas('kunjungan', function ($query) use ($input_date) {
+																										$query->whereDate('tanggal_kunjungan', $input_date);
+																									})
+																									->get();//Cek pendaftar jika lebih sekali dalam mendaftar
+						$cek_kapasitas = Kunjungan::whereDate('tanggal_kunjungan', $input_date)->count(); //Batasi pengunjung
+						$jadwalDB = JadwalKunjungan::where('hari', date('D', strtotime($date)))->where('status', 'y')->first(); //get jadwal dari DB
 						
-						if ($cek_kapasitas == 36) {
+						if ($cek_kapasitas == $jadwalDB->kapasitas) {
 							return redirect()->route('kunjungan.index')->with('error','Kapasitas pengunjung pada tanggal tesebut sudah penuh. Mohon untuk mengganti tanggal kunjungan anda. ');
 						} else {
 							if ($cek_duplicate_data->isEmpty()) {
-								$cek_petugas = '';
-								if ($get_day == 'Mon') {
-									$cek_petugas = JadwalJaga::where('hari', 'Mon')->first();
-								}
-								if ($get_day == 'Wed') {
-									$cek_petugas = JadwalJaga::where('hari', 'Wed')->first();
-								}
 								
 								if ($cek_first_data->isEmpty()) {
 	
-									$visitor = new Kunjungan();
-									$visitor->petugas_id = $cek_petugas->petugas_id;
-									$visitor->user_id = Auth::id();
-									$visitor->warga_rutan_id = $request->criminal_id;
-									$visitor->nama_pengunjung = $request->nama_pengunjung;
-									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
-									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
-									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
-									$visitor->no_antrian = 1;
-									$visitor->tanggal_kunjungan = date("Y-m-d 09:00:00", strtotime($date));
-									$visitor->save();
-	
+									$kunjungan = new Kunjungan();
+									$kunjungan->id_jadwal_kunjungan = $jadwalDB->id_jadwal_kunjungan;
+									$kunjungan->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime("$date $jadwalDB->jam_mulai"));
+									$saved = $kunjungan->save();
+
+									if ($saved) {
+										$detail_kunjungan = new DetailKunjungan();
+										$detail_kunjungan->id_pengunjung = Auth::id();
+										$detail_kunjungan->id_kunjungan = $kunjungan->id_kunjungan;
+										$detail_kunjungan->save();
+									}
+
 									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
 	
 								} else {
-									$last_visitor = Kunjungan::with('warga_rutan')
-																					->whereHas('warga_rutan', function ($query) {
-																							$query->where('tipe', "tahanan");
-																					})
-																					->whereDate('tanggal_kunjungan', $input_date)
+									$last_visitor = Kunjungan::whereDate('tanggal_kunjungan', $input_date)
 																					->orderBy('tanggal_kunjungan', 'desc')
 																					->first();
-									$no_antri = $last_visitor->no_antrian + 1;
 									
-									$visitor = new Kunjungan();
-									$visitor->petugas_id = $cek_petugas->petugas_id;
-									$visitor->user_id = Auth::id();
-									$visitor->warga_rutan_id = $request->criminal_id;
-									$visitor->nama_pengunjung = $request->nama_pengunjung;
-									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
-									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
-									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
-									$visitor->no_antrian = $no_antri;
-									$visitor->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime($last_visitor->tanggal_kunjungan.'+ 5 minute'));
-									$visitor->save();
+									$kunjungan = new Kunjungan();
+									$kunjungan->id_jadwal_kunjungan = $jadwalDB->id_jadwal_kunjungan;
+									$kunjungan->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime($last_visitor->tanggal_kunjungan.'+ 5 minute'));
+									$saved = $kunjungan->save();
+
+									if ($saved) {
+										$detail_kunjungan = new DetailKunjungan();
+										$detail_kunjungan->id_pengunjung = Auth::id();
+										$detail_kunjungan->id_kunjungan = $kunjungan->id_kunjungan;
+										$detail_kunjungan->save();
+									}
 	
 									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
 	
@@ -121,77 +111,67 @@ class KunjunganController extends Controller
 					}
 				}
 
-				if ($criminal->tipe == 'pidana') {
+				if ($criminal->jenis_warga_rutan->nama_jenis == 'pidana') {
 					if ($get_day == 'Tue' || $get_day == 'Thu') {
 						$input_date = date('Y-m-d', strtotime($date));
 						$cek_first_data = Kunjungan::whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
-						$cek_duplicate_data = Kunjungan::where('user_id', Auth::id())->whereDate('tanggal_kunjungan', $input_date)->get(); //Cek pendaftar pertama
-						$cek_kapasitas = Kunjungan::with('warga_rutan')
-																			->whereHas('warga_rutan', function ($query) {
-																					$query->where('tipe', "pidana");
-																			})
-																			->whereDate('tanggal_kunjungan', $input_date)
-																			->count(); //Batasi pengunjung
-						if ($cek_kapasitas == 36) {
+						$cek_duplicate_data = DetailKunjungan::where('id_pengunjung', Auth::id())																									
+																									->whereHas('kunjungan', function ($query) use ($input_date) {
+																										$query->whereDate('tanggal_kunjungan', $input_date);
+																									})
+																									->get();//Cek pendaftar jika lebih sekali dalam mendaftar
+						$cek_kapasitas = Kunjungan::whereDate('tanggal_kunjungan', $input_date)->count(); //Batasi pengunjung
+						$jadwalDB = JadwalKunjungan::where('hari', date('D', strtotime($date)))->where('status', 'y')->first(); //get jadwal dari DB
+						
+						if ($cek_kapasitas == $jadwalDB->kapasitas) {
 							return redirect()->route('kunjungan.index')->with('error','Kapasitas pengunjung pada tanggal tesebut sudah penuh. Mohon untuk mengganti tanggal kunjungan anda. ');
 						} else {
 							if ($cek_duplicate_data->isEmpty()) {
-								$cek_petugas = '';
-								if ($get_day == 'Tue') {
-									$cek_petugas = JadwalJaga::where('hari', 'Tue')->first();
-								}
-								if ($get_day == 'Thu') {
-									$cek_petugas = JadwalJaga::where('hari', 'Thu')->first();
-								}
-
+								
 								if ($cek_first_data->isEmpty()) {
 	
-									$visitor = new Kunjungan();
-									$visitor->petugas_id = $cek_petugas->petugas_id;
-									$visitor->user_id = Auth::id();
-									$visitor->warga_rutan_id = $request->criminal_id;
-									$visitor->nama_pengunjung = $request->nama_pengunjung;
-									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
-									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
-									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
-									$visitor->no_antrian = 1;
-									$visitor->tanggal_kunjungan = date("Y-m-d 09:00:00", strtotime($date));
-									$visitor->save();
-	
+									$kunjungan = new Kunjungan();
+									$kunjungan->id_jadwal_kunjungan = $jadwalDB->id_jadwal_kunjungan;
+									$kunjungan->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime("$date $jadwalDB->jam_mulai"));
+									$saved = $kunjungan->save();
+
+									if ($saved) {
+										$detail_kunjungan = new DetailKunjungan();
+										$detail_kunjungan->id_pengunjung = Auth::id();
+										$detail_kunjungan->id_kunjungan = $kunjungan->id_kunjungan;
+										$detail_kunjungan->save();
+									}
+
 									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
 	
 								} else {
-									$last_visitor = Kunjungan::with('warga_rutan')
-																					->whereHas('warga_rutan', function ($query) {
-																							$query->where('tipe', "pidana");
-																					})
-																					->whereDate('tanggal_kunjungan', $input_date)
+									$last_visitor = Kunjungan::whereDate('tanggal_kunjungan', $input_date)
 																					->orderBy('tanggal_kunjungan', 'desc')
 																					->first();
-									$no_antri = $last_visitor->no_antrian + 1;
 									
-									$visitor = new Kunjungan();
-									$visitor->petugas_id = $cek_petugas->petugas_id;
-									$visitor->user_id = Auth::id();
-									$visitor->warga_rutan_id = $request->criminal_id;
-									$visitor->nama_pengunjung = $request->nama_pengunjung;
-									$visitor->jmh_pengikut_laki = $request->jmh_pengikut_laki;
-									$visitor->jmh_pengikut_perempuan = $request->jmh_pengikut_perempuan;
-									$visitor->jmh_pengikut_anak = $request->jmh_pengikut_anak;
-									$visitor->no_antrian = $no_antri;
-									$visitor->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime($last_visitor->tanggal_kunjungan.'+ 5 minute'));
-									$visitor->save();
+									$kunjungan = new Kunjungan();
+									$kunjungan->id_jadwal_kunjungan = $jadwalDB->id_jadwal_kunjungan;
+									$kunjungan->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime($last_visitor->tanggal_kunjungan.'+ 5 minute'));
+									$saved = $kunjungan->save();
+
+									if ($saved) {
+										$detail_kunjungan = new DetailKunjungan();
+										$detail_kunjungan->id_pengunjung = Auth::id();
+										$detail_kunjungan->id_kunjungan = $kunjungan->id_kunjungan;
+										$detail_kunjungan->save();
+									}
 	
 									return redirect()->route('history.index')->with('visitor_success','Data berhasil di simpan... ');
 	
 								}
+
 							} else {
 								return redirect()->route('kunjungan.index')->with('error','User tidak boleh medaftar kunjungan lebih dari sekali dalam sehari. ');
 							}
-						}						
+						}
 
 					}else{
-						return redirect()->route('kunjungan.index')->with('error','Pendaftaran kunjungan bagi status PIDANA hanya terjadwal pada hari Selasa dan Kamis.');
+						return redirect()->route('kunjungan.index')->with('error','Pendaftaran kunjungan bagi status TAHANAN hanya terjadwal pada hari Senin dan Rabu.');
 					}
 				}
 

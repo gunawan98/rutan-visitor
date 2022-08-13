@@ -53,9 +53,9 @@
 						<li class="nav-item dropdown ms-lg-3">
 							<a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								<div class="media d-flex align-items-center">
-									<img class="avatar rounded-circle" alt="Image placeholder" src="https://ui-avatars.com/api/?name={{Auth::user()->name}}&size=128&background=random">
+									<img class="avatar rounded-circle" alt="Image placeholder" src="https://ui-avatars.com/api/?name={{Auth::user()->nama_pengunjung}}&size=128&background=random">
 									<div class="media-body ms-2 text-dark align-items-center d-lg-block">
-										<span class="mb-0 font-small fw-bold text-white-900">{{Auth::user()->name}}</span>
+										<span class="mb-0 font-small fw-bold text-white-900">{{Auth::user()->nama_pengunjung}}</span>
 									</div>
 								</div>
 							</a>

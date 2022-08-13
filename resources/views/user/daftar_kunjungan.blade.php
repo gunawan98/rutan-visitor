@@ -18,11 +18,12 @@
 @section('content')
 <div class="row">
 		<div class="col-12 mb-8">
+			@if ($cek_verify->tanggal_verifikasi != null)
 				<div class="card border-0 shadow components-section">
 						<div class="card-body">   
 							<form action="{{route('kunjungan.store')}}" method="post" enctype="multipart/form-data">
 								@csrf
-								<div class="row mb-4">
+								<div class="row mb-2">
 										<div class="col-lg-6 col-sm-6">
 												<div class="mb-3">
 													<label class="my-1 me-2" for="tanggal">Cari tanggal</label>
@@ -40,70 +41,14 @@
 												<div class="mb-3">
 													<label class="my-1 me-2" for="criminal_id">Nama Napi</label>
 													<select class="form-select @error('criminal_id') is-invalid @enderror" id="criminal_id" name="criminal_id" aria-label="Default select example">
-														<option value="">---- Data Criminal ----</option>
+														<option value="">---- Data kriminal yang terhubung ----</option>
 														@foreach ($data_criminal as $criminal)
-															<option value="{{$criminal->id}}">{{$criminal->name}} (Hubungan : {{$criminal->hubungan}})</option>
+															<option value="{{$criminal->id_warga_rutan}}">{{$criminal->warga_rutan->nama_warga_rutan}}</option>
 														@endforeach
 													</select>
 													@error('criminal_id')
 														<div class="invalid-feedback">{{ $message }}</div>
 													@enderror
-												</div>
-
-												<div class="card border-1 shadow components-section">
-													<div class="card-body">
-														<div class="mb-5">
-																<label for="nama_pengunjung">Nama Pengunjung</label>
-																<div class="input-group">
-																	<span class="input-group-text" id="basic-addon1">
-																		<svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path></svg>
-																	</span>
-																	<input type="text" class="form-control @error('nama_pengunjung') is-invalid @enderror" name="nama_pengunjung" value="{{ old('nama_pengunjung') }}" aria-label="nama_pengunjung">
-																	@error('nama_pengunjung')
-																		<div class="invalid-feedback">{{ $message }}</div>
-																	@enderror
-																</div>
-														</div>
-														<div class="mb-1 text-end">
-															<h5>Jumlah Pengikut :</h5>
-														</div>
-														<div class="mb-3">
-																<label for="jmh_pengikut_laki">Laki-laki</label>
-																<div class="input-group">
-																	<span class="input-group-text" id="basic-addon1">
-																		<svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path></svg>
-																	</span>
-																	<input type="text" class="form-control @error('jmh_pengikut_laki') is-invalid @enderror" name="jmh_pengikut_laki" value="{{ old('jmh_pengikut_laki') }}" aria-label="jmh_pengikut_laki">
-																	@error('jmh_pengikut_laki')
-																		<div class="invalid-feedback">{{ $message }}</div>
-																	@enderror
-																</div>
-														</div>
-														<div class="mb-3">
-																<label for="jmh_pengikut_perempuan">Perempuan</label>
-																<div class="input-group">
-																	<span class="input-group-text" id="basic-addon1">
-																		<svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path></svg>
-																	</span>
-																	<input type="text" class="form-control @error('jmh_pengikut_perempuan') is-invalid @enderror" name="jmh_pengikut_perempuan" value="{{ old('jmh_pengikut_perempuan') }}" aria-label="jmh_pengikut_perempuan">
-																	@error('jmh_pengikut_perempuan')
-																	<div class="invalid-feedback">{{ $message }}</div>
-																	@enderror
-																</div>
-														</div>
-														<div class="mb-3">
-																<label for="jmh_pengikut_anak">Anak-anak</label>
-																<div class="input-group">
-																	<span class="input-group-text" id="basic-addon1">
-																		<svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path></svg>
-																	</span>
-																	<input type="text" class="form-control @error('jmh_pengikut_anak') is-invalid @enderror" name="jmh_pengikut_anak" value="{{ old('jmh_pengikut_anak') }}" aria-label="jmh_pengikut_anak">
-																	@error('jmh_pengikut_anak')
-																	<div class="invalid-feedback">{{ $message }}</div>
-																	@enderror
-																</div>
-														</div>
-													</div>
 												</div>
 
 												<div class="mb-3 d-grid">
@@ -123,8 +68,12 @@
 																<div class="col-sm-12 col-md-12 fw-bolder"><h4>Akun:</h4></div>
 															</div>
 															<div class="row pb-2 g-0">
+																<div class="col-sm-6 col-md-4 fw-bolder">Username</div>
+																<div class="col-6 col-md-8">: {{$data_user->username}}</div>
+															</div>
+															<div class="row pb-2 g-0">
 																<div class="col-sm-6 col-md-4 fw-bolder">Nama</div>
-																<div class="col-6 col-md-8">: {{$data_user->name}}</div>
+																<div class="col-6 col-md-8">: {{$data_user->nama_pengunjung}}</div>
 															</div>
 															<div class="row pb-2 g-0">
 																<div class="col-sm-6 col-md-4 fw-bolder">Jenis Kelamin</div>
@@ -134,53 +83,50 @@
 																<div class="col-sm-6 col-md-4 fw-bolder">No. telepon</div>
 																<div class="col-6 col-md-8">: {{$data_user->no_telepon}}</div>
 															</div>
-															<div class="row pb-2 g-0">
-																<div class="col-sm-6 col-md-4 fw-bolder">Email</div>
-																<div class="col-6 col-md-8">: {{$data_user->email}}</div>
-															</div>
 															<div class="row pb-2 g-0 pb-3" style="border-bottom: 1px dashed gray;">
 																<div class="col-sm-6 col-md-4 fw-bolder">Alamat</div>
 																<div class="col-6 col-md-8">: {{$data_user->alamat}}</div>
 															</div>
-															<div class="row pb-2 g-0">
+															<div class="row pt-4 g-0">
 																<div class="col-sm-12 col-md-12 fw-bolder"><h4>Data Kriminal:</h4></div>
 															</div>
-															<div class="row pb-2 g-0 pt-3">
+															<div class="row pb-2 g-0">
+																<div class="col-xs-6 col-md-4 fw-bolder">Nomor NIK</div>
+																<div class="col-xs-6 col-md-7">
+																	: <span id="nik-kriminal">-</span>
+																</div>
+															</div>
+															<div class="row pb-2 g-0">
 																<div class="col-xs-6 col-md-4 fw-bolder">Nama</div>
 																<div class="col-xs-6 col-md-7">
 																	: <span id="nama-kriminal">-</span>
 																</div>
 															</div>
-															<div class="row pb-2 g-0 pt-3">
-																<div class="col-xs-6 col-md-4 fw-bolder">Tipe</div>
+															<div class="row pb-2 g-0">
+																<div class="col-xs-6 col-md-4 fw-bolder">Jenis Kelmain</div>
+																<div class="col-xs-6 col-md-7">
+																	: <span id="jenkel-kriminal">-</span>
+																</div>
+															</div>
+															<div class="row pb-2 g-0">
+																<div class="col-xs-6 col-md-4 fw-bolder">Alamat</div>
+																<div class="col-xs-6 col-md-7">
+																	: <span id="alamat-kriminal">-</span>
+																</div>
+															</div>
+															<div class="row pb-2 g-0">
+																<div class="col-xs-6 col-md-4 fw-bolder">Tipe Kriminal</div>
 																<div class="col-xs-6 col-md-7">
 																	: <span id="tipe-kriminal">-</span>
 																</div>
 															</div>
-															<div class="row pb-2 g-0 pt-3">
+															<div class="row pb-2 g-0">
 																<div class="col-xs-6 col-md-4 fw-bolder">Kasus</div>
 																<div class="col-xs-6 col-md-7">
 																	: <span id="kasus-kriminal">-</span>
 																</div>
 															</div>
-															<div class="row pb-2 g-0 pt-3">
-																<div class="col-xs-6 col-md-4 fw-bolder">Hubungan Keluarga</div>
-																<div class="col-xs-6 col-md-7">
-																	: <span id="hubungan-kriminal">-</span>
-																</div>
-															</div>
 														</div>
-													</div>
-													<div class="col-12">
-															<div class="card card-body border-0 shadow mb-4">
-																	<h2 class="h5">Preview File KTP <span class="text-muted" style="font-weight: 400;">No. <span id="ktp-kriminal">-</span></span></h2> 
-																	<div class="d-flex align-items-center">
-																		<div class="mx-auto">
-																			<img class="rounded" id="preview-ktp" src="" alt="File KTP Tidak Ditemukan" height="200px">
-																		</div>
-																	</div> 
-                                   
-															</div>
 													</div>
 											</div>
 									</div>
@@ -188,6 +134,25 @@
 							</form>
 						</div>
 				</div>
+
+			@else
+
+				<div class="card border-0 shadow mb-4">
+					<div class="card">
+						<div class="card-header">
+							
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">Anda belum bisa melakukan pendaftaran kunjungan</h5>
+							<p class="card-text">Mohon menunggu sampai petugas memverifikasi data pada akun anda. Terima kasih</p>
+						</div>
+						<div class="card-footer text-muted text-end">
+							©<span class="current-year"></span> <a class="text-primary fw-normal" href="#">RUTAN Kraksaan</a>
+						</div>
+					</div>
+				</div>
+				
+			@endif
 		</div>
 </div>
 @endsection
@@ -206,12 +171,12 @@
 				type: 'get',
 				url: url,
 				success: function (data) {
-					document.getElementById("nama-kriminal").innerHTML = data.name;
-					document.getElementById("tipe-kriminal").innerHTML = data.tipe;
+					document.getElementById("nik-kriminal").innerHTML = data.nik;
+					document.getElementById("nama-kriminal").innerHTML = data.nama_warga_rutan;
+					document.getElementById("jenkel-kriminal").innerHTML = data.jenis_kelamin;
+					document.getElementById("alamat-kriminal").innerHTML = data.alamat;
+					document.getElementById("tipe-kriminal").innerHTML = data.jenis_warga_rutan.nama_jenis;
 					document.getElementById("kasus-kriminal").innerHTML = data.kasus;
-					document.getElementById("hubungan-kriminal").innerHTML = data.hubungan;
-					document.getElementById("ktp-kriminal").innerHTML = data.no_nik;
-					document.getElementById('preview-ktp').src=`{{url('uploads/file_ktp/${data.file_ktp}')}}`;
 				}
 			});
 				

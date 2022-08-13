@@ -10,6 +10,7 @@ class DetailKunjungan extends Model
     use HasFactory;
 
 		protected $table = 'detail_kunjungan';
+		protected $primaryKey = 'id_detail_kunjungan';
 
 		protected $fillable = [
 			'id_pengunjung', 'id_kunjungan',

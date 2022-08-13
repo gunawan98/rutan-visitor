@@ -29,14 +29,14 @@
 			
 							@php
 								$day = array("Mon"=>"Senin","Tue"=>"Selasa","Wed"=>"Rabu","Thu"=>"Kamis");
-								echo $day[date('D', strtotime($history->tanggal_kunjungan))].", ";
+								echo $day[date('D', strtotime($history->kunjungan->tanggal_kunjungan))].", ";
 							@endphp
-							{{date('d-m-Y', strtotime($history->tanggal_kunjungan))}}
+							{{date('d-m-Y', strtotime($history->kunjungan->tanggal_kunjungan))}}
 						</div>
 						<div class="col-xs-6 col-md-6 text-end">
 							<svg class="w-6 h-6" fill="none" stroke="currentColor" width="25" height="25" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
 
-							{{date('H:i', strtotime($history->tanggal_kunjungan))}} - {{date('H:i', strtotime($history->tanggal_kunjungan.'+ 5 minute'))}}
+							{{date('H:i', strtotime($history->kunjungan->tanggal_kunjungan))}} - {{date('H:i', strtotime($history->kunjungan->tanggal_kunjungan.'+ 5 minute'))}}
 						</div>
 					</div>
 				
@@ -47,19 +47,19 @@
 							<h5 class="card-title">Target Kunjungan</h5>
 							<div class="row pb-2 g-0">
 								<p class="fw-bolder">Nama</p>
-								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->warga_rutan->name}}</em></span>
+								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$criminal->warga_rutan->nama_warga_rutan}}</em></span>
 							</div>
 							<div class="row pb-2 g-0">
-								<p class="fw-bolder">Tipe</p>
-								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->warga_rutan->tipe}}</em></span>
+								<p class="fw-bolder">Tipe Kurungan</p>
+								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$criminal->warga_rutan->jenis_warga_rutan->nama_jenis}}</em></span>
 							</div>
 							<div class="row pb-2 g-0">
 								<p class="fw-bolder">Kasus</p>
-								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->warga_rutan->kasus}}</em></span>
+								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$criminal->warga_rutan->kasus}}</em></span>
 							</div>
 							<div class="row pb-2 g-0">
-								<p class="fw-bolder">Hubungan</p>
-								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$history->warga_rutan->hubungan}}</em></span>
+								<p class="fw-bolder">Alamat</p>
+								<span class="card-text text-muted" style="margin-top: -15px; margin-left: 5px"><em>* {{$criminal->warga_rutan->alamat}}</em></span>
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -76,10 +76,10 @@
 									box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 								"
 							>
-								<h1>{{$history->no_antrian}}</h1>
+								<h1>00</h1>
 							</div>
 							<p class="text-danger mt-5"><small><em>NB: Harap hadir sebelum waktu nomor antrian</em></small></p>
-							<p class="text-primary"><small>Petugas: {{$history->petugas->name}}</small></p>
+							<p class="text-primary"><small>Petugas: {{$history->kunjungan->jadwal_kunjungan->petugas->nama_petugas}}</small></p>
 						</div>
 					</div>
 

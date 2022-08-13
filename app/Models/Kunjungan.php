@@ -10,6 +10,7 @@ class Kunjungan extends Model
     use HasFactory;
 
 		protected $table = 'kunjungan';
+		protected $primaryKey = 'id_kunjungan';
 
 		protected $fillable = [
 			'id_jadwal_kunjungan', 'tanggal_kunjungan',
