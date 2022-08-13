@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('kunjungan', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_kunjungan');
 
-						$table->foreignId('jadwal_kunjungan_id')->nullable();
-            $table->foreign('jadwal_kunjungan_id')->references('id')->on('jadwal_kunjungan')->onDelete('cascade');
+						$table->foreignId('id_jadwal_kunjungan')->nullable();
+            $table->foreign('id_jadwal_kunjungan')->references('id_jadwal_kunjungan')->on('jadwal_kunjungan')->onDelete('cascade');
 
 						$table->timestamp('tanggal_kunjungan');
             $table->timestamps();

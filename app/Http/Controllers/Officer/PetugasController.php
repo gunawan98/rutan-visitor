@@ -32,10 +32,10 @@ class PetugasController extends Controller
 			// ]);
 
 			$petugas = new Petugas();
-			$petugas->nama = $request->nama;
+			$petugas->nama_petugas = $request->nama_petugas;
 			$petugas->alamat = $request->alamat;
 			$petugas->no_telepon = $request->no_telepon;
-			$petugas->email = $request->email;
+			$petugas->username = $request->username;
 			$petugas->password = Hash::make($request->password);
 			$petugas->save();
 
@@ -60,16 +60,16 @@ class PetugasController extends Controller
 			// 	'hubungan' => 'required'
 			// ]);
 
-			$cek_data = Petugas::where('id', $id)->first();
+			$cek_data = Petugas::where('id_petugas', $id)->first();
 
 			if ($cek_data === null) {
 				return redirect()->back()->with(['warning' => 'Data tidak ditemukan.']);
 			} else {
 				$data = Petugas::find($id);
-				$data->nama = $request->nama;
+				$data->nama_petugas = $request->nama_petugas;
 				$data->alamat = $request->alamat;
 				$data->no_telepon = $request->no_telepon;
-				$data->email = $request->email;
+				$data->username = $request->username;
 
 				if ($request->password) {
 					$data->password = Hash::make($request->password);

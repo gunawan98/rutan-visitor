@@ -66,11 +66,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Pengunjung::class,
         ],
         'officers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Officer::class,
+            'model' => App\Models\Petugas::class,
         ],
 
         // 'users' => [

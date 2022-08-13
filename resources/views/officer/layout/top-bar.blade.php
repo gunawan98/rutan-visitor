@@ -22,7 +22,7 @@
 								<div class="media d-flex align-items-center">
 									<img class="avatar rounded-circle" alt="Image placeholder" src="{{asset('template/assets/img/logo-polri.png')}}">
 									<div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-										<span class="mb-0 font-small fw-bold text-gray-900">Temporary name</span>
+										<span class="mb-0 font-small fw-bold text-gray-900">{{auth()->user()->username}}</span>
 									</div>
 								</div>
 							</a>

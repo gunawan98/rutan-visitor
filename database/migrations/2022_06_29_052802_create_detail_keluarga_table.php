@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('detail_keluarga', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_detail_keluarga');
 
-						$table->foreignId('pengunjung_id')->nullable();
-            $table->foreign('pengunjung_id')->references('id')->on('pengunjung')->onDelete('cascade');
+						$table->foreignId('id_pengunjung')->nullable();
+            $table->foreign('id_pengunjung')->references('id_pengunjung')->on('pengunjung')->onDelete('cascade');
 						
-						$table->foreignId('warga_rutan_id')->nullable();
-            $table->foreign('warga_rutan_id')->references('id')->on('warga_rutan')->onDelete('cascade');
+						$table->foreignId('id_warga_rutan')->nullable();
+            $table->foreign('id_warga_rutan')->references('id_warga_rutan')->on('warga_rutan')->onDelete('cascade');
 
-            $table->string('status_keluarga');
+            $table->string('status_keluarga', 2);
 						$table->timestamps();
         });
     }

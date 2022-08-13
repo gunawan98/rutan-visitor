@@ -32,50 +32,9 @@
 									</span>
 								</div>
 								<div class="col-8">
-									<span class="text-muted">{{$list->user->name}}</span>
+									<span class="text-muted">{{$list->detail_kunjungan->id_pengunjung}}</span>
 									<br>
-									<span class="text-muted" style="font-weight: 200;">{{$list->user->alamat}}</span>
-								</div>
-							</div>
-						@endforeach
-					</li>
-					@empty
-					<h6 class="text-muted">Belum ada data terdaftar.</h6>
-				@endforelse
-			</ul>	
-				
-			</div>
-	</div>
-</div>
-
-<div class="col-xs-12 col-md-6">
-	<div class="card border-0 shadow mb-4">
-			<div class="card-body">
-
-			<h4>Informasi Pengunjung Tipe Narapidana</h4>
-			<p></p>
-			<ul class="timeline">
-				@forelse ($inf_pidana as $key => $data)
-					<li class="timeline-item mb-5">
-						<p class="text-muted mb-2 fw-bold">
-							@php
-								$day = array("Mon"=>"Senin","Tue"=>"Selasa","Wed"=>"Rabu","Thu"=>"Kamis");
-								echo $day[date('D', strtotime($key))].", ";
-							@endphp
-							{{date('d-m-Y', strtotime($key))}}
-						</p>
-						
-						@foreach ($data as $list)
-							<div class="row">
-								<div class="col-4 ps-4">
-									<span class="text-danger">
-										{{date('H:i', strtotime($list->tanggal_kunjungan))}} - 00.00
-									</span>
-								</div>
-								<div class="col-8">
-									<span class="text-muted">{{$list->user->name}}</span>
-									<br>
-									<span class="text-muted" style="font-weight: 200;">{{$list->user->alamat}}</span>
+									<span class="text-muted" style="font-weight: 200;">{{$list->detail_kunjungan->id_pengunjung}}</span>
 								</div>
 							</div>
 						@endforeach

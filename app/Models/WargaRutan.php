@@ -10,18 +10,19 @@ class WargaRutan extends Model
     use HasFactory;
 
 		protected $table = 'warga_rutan';
+		protected $primaryKey = 'id_warga_rutan';
 
 		protected $fillable = [
-			'jenis_warga_rutan_id', 'nik', 'nama', 'alamat', 'jenis_kelamin', 'no_telepon', 'kasus', 'status'
+			'id_jenis_warga_rutan', 'nik', 'nama_warga_rutan', 'alamat', 'jenis_kelamin', 'no_telepon', 'kasus', 'status'
 		];
 
 		public function jenis_warga_rutan()
     {
-        return $this->belongsTo(JenisWargaRutan::class, 'jenis_warga_rutan_id');
+        return $this->belongsTo(JenisWargaRutan::class, 'id_jenis_warga_rutan');
     }
 
 		public function detail_keluarga()
     {
-			return $this->hasMany(DetailKeluarga::class, 'warga_rutan_id', 'id');
+			return $this->hasMany(DetailKeluarga::class, 'id_warga_rutan', 'id_warga_rutan');
     }
 }

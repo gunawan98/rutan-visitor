@@ -14,20 +14,20 @@ return new class extends Migration
     public function up()
     {
         Schema::create('detail_syarat', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_detail_syarat');
 
-						$table->foreignId('petugas_id')->nullable();
-            $table->foreign('petugas_id')->references('id')->on('petugas')->onDelete('cascade');
+						$table->foreignId('id_petugas')->nullable();
+            $table->foreign('id_petugas')->references('id_petugas')->on('petugas')->onDelete('cascade');
 						
-						$table->foreignId('pengunjung_id')->nullable();
-            $table->foreign('pengunjung_id')->references('id')->on('pengunjung')->onDelete('cascade');
+						$table->foreignId('id_pengunjung')->nullable();
+            $table->foreign('id_pengunjung')->references('id_pengunjung')->on('pengunjung')->onDelete('cascade');
 						
-						$table->foreignId('jenis_syarat_id')->nullable();
-            $table->foreign('jenis_syarat_id')->references('id')->on('jenis_syarat')->onDelete('cascade');
+						$table->foreignId('id_jenis_syarat')->nullable();
+            $table->foreign('id_jenis_syarat')->references('id_jenis_syarat')->on('jenis_syarat')->onDelete('cascade');
 
-						$table->timestamp('tanggal_verifikasi');
+						$table->timestamp('tanggal_verifikasi')->nullable();
 
-						$table->string('file_syarat');
+						$table->string('file_syarat', 45);
             $table->timestamps();
         });
     }

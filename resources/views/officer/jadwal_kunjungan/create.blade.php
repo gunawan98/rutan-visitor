@@ -84,14 +84,14 @@
 														@csrf
 
 														<div class="mb-3">
-																<label for="petugas_id">Petugas</label>
+																<label for="id_petugas">Petugas</label>
 																<div class="input-group">
-																		<select name="petugas_id" class="form-select">
+																		<select name="id_petugas" class="form-select">
 																			@foreach ($petugas as $data)
-																				<option value="{{$data->id}}">{{$data->nama}}</option>
+																				<option value="{{$data->id_petugas}}">{{$data->nama_petugas}}</option>
 																			@endforeach
 																		</select>
-																		@error('petugas_id')
+																		@error('id_petugas')
 																		<div class="invalid-feedback">{{ $message }}</div>
 																		@enderror
 																</div>

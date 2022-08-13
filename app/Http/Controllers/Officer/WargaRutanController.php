@@ -36,7 +36,7 @@ class WargaRutanController extends Controller
 
 			$warga_rutan = new WargaRutan();
 			$warga_rutan->nik = $request->nik;
-			$warga_rutan->nama = $request->nama;
+			$warga_rutan->nama_warga_rutan = $request->nama_warga_rutan;
 			$warga_rutan->alamat = $request->alamat;
 			$warga_rutan->jenis_kelamin = $request->jenis_kelamin;
 			$warga_rutan->no_telepon = $request->no_telepon;
@@ -66,15 +66,15 @@ class WargaRutanController extends Controller
 			// 	'hubungan' => 'required'
 			// ]);
 
-			$cek_data = WargaRutan::where('id', $id)->first();
+			$cek_data = WargaRutan::where('id_warga_rutan', $id)->first();
 
 			if ($cek_data === null) {
 				return redirect()->back()->with(['warning' => 'Data tidak ditemukan.']);
 			} else {
 				$data = WargaRutan::find($id);
-				$data->jenis_warga_rutan_id = $request->jenis_warga_rutan_id;
+				$data->id_jenis_warga_rutan = $request->id_jenis_warga_rutan;
 				$data->nik = $request->nik;
-				$data->nama = $request->nama;
+				$data->nama_warga_rutan = $request->nama_warga_rutan;
 				$data->alamat = $request->alamat;
 				$data->jenis_kelamin = $request->jenis_kelamin;
 				$data->no_telepon = $request->no_telepon;

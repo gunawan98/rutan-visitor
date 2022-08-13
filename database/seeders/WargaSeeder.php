@@ -17,27 +17,27 @@ class WargaSeeder extends Seeder
     {
       $data = [
 				[
-					'jenis_warga_rutan_id' => 1,
+					'id_jenis_warga_rutan' => 1,
 					'nik' => '1516001119998',
-					'nama' => 'Badrool',
+					'nama_warga_rutan' => 'Badrool',
 					'alamat' => 'Sumber Anyar',
 					'jenis_kelamin' => 'laki-laki',
 					'no_telepon' => '085111222333',
 					'kasus' => 'Mencuri data',
 					'status' => 'y'
 				],[
-					'jenis_warga_rutan_id' => 2,
+					'id_jenis_warga_rutan' => 2,
 					'nik' => '1516001119996',
-					'nama' => 'Juminte',
+					'nama_warga_rutan' => 'Juminte',
 					'alamat' => 'Alas Purwo',
 					'jenis_kelamin' => 'perempuan',
 					'no_telepon' => '085111222339',
 					'kasus' => 'Mencuri data',
 					'status' => 'y'
 				],[
-					'jenis_warga_rutan_id' => 1,
+					'id_jenis_warga_rutan' => 1,
 					'nik' => '1516001119997',
-					'nama' => 'Bonge',
+					'nama_warga_rutan' => 'Bonge',
 					'alamat' => 'Krajan',
 					'jenis_kelamin' => 'laki-laki',
 					'no_telepon' => '085111222335',

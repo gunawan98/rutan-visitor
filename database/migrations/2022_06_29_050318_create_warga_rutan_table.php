@@ -14,17 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('warga_rutan', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_warga_rutan');
 
-						$table->foreignId('jenis_warga_rutan_id')->nullable();
-            $table->foreign('jenis_warga_rutan_id')->references('id')->on('jenis_warga_rutan')->onDelete('cascade');
+						$table->foreignId('id_jenis_warga_rutan')->nullable();
+            $table->foreign('id_jenis_warga_rutan')->references('id_jenis_warga_rutan')->on('jenis_warga_rutan')->onDelete('cascade');
 
-						$table->string('nik')->unique();
-						$table->string('nama');
+						$table->string('nik', 16)->unique();
+						$table->string('nama_warga_rutan', 45);
 						$table->text('alamat');
 						$table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
-						$table->string('no_telepon');
-						$table->string('kasus');
+						$table->string('no_telepon', 13);
+						$table->text('kasus');
 						$table->enum('status', ['y', 't']);
             $table->timestamps();
         });

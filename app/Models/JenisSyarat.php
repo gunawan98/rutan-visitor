@@ -10,6 +10,7 @@ class JenisSyarat extends Model
     use HasFactory;
 
 		protected $table = 'jenis_syarat';
+		protected $primaryKey = 'id_jenis_syarat';
 
 		protected $fillable = [
 			'nama_syarat', 'status'
@@ -17,6 +18,6 @@ class JenisSyarat extends Model
 
 		public function detail_syarat()
     {
-			return $this->hasMany(DetailSyarat::class, 'jenis_syarat_id', 'id');
+			return $this->hasMany(DetailSyarat::class, 'id_jenis_syarat', 'id_jenis_syarat');
     }
 }

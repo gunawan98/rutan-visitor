@@ -14,13 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('petugas', function (Blueprint $table) {
-						$table->id();
-						$table->string('nama');
+						$table->id('id_petugas');
+						$table->string('nama_petugas', 45);
 						$table->text('alamat');
-						$table->string('no_telepon')->unique();
-						$table->string('email')->unique();
-						$table->timestamp('email_verified_at')->nullable();
-						$table->string('password');
+						$table->string('no_telepon', 13)->unique();
+						$table->string('username', 45)->unique();
+						$table->string('password', 200);
 						$table->rememberToken();
 						$table->timestamps();
         });

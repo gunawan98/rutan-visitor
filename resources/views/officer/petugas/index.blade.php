@@ -60,7 +60,7 @@
 												<th class="border-0">Nama</th>
 												<th class="border-0">Alamat</th>
 												<th class="border-0">No. Telepon</th>
-												<th class="border-0">Email</th>
+												<th class="border-0">Username</th>
 												<th class="border-0"></th>
 										</tr>
 								</thead>
@@ -70,7 +70,7 @@
 											<td>{{ $loop->iteration }}</td>
 											<td class="fw-bold align-items-center">
 													<svg class="icon icon-xxs text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-													{{$data->nama}}
+													{{$data->nama_petugas}}
 											</td>
 											<td>
 													{{$data->alamat}}
@@ -79,18 +79,18 @@
 												{{ $data->no_telepon }}
 											</td>
 											<td>
-												<a class="small fw-bold" href="#">{{ $data->email }}</a>
+												<a class="small fw-bold" href="#">{{ $data->username }}</a>
 											</td>
 											<td class="text-success">
-												<a href="{{route('officer.petugas.edit', $data->id)}}">
+												<a href="{{route('officer.petugas.edit', $data->id_petugas)}}">
 													<button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
 															<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
 															Edit
 													</button>
 												</a>
-												<button type="button" class="btn btn-danger btn-sm" onclick="deleteItem(this)" data-id="{{ $data->id }}">
+												<!-- <button type="button" class="btn btn-danger btn-sm" onclick="deleteItem(this)" data-id="{{ $data->id }}">
 													<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Hapus
-												</button>
+												</button> -->
 											</td>
 									</tr>
 									@endforeach

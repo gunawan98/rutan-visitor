@@ -12,16 +12,16 @@ class DetailKunjungan extends Model
 		protected $table = 'detail_kunjungan';
 
 		protected $fillable = [
-			'pengunjung_id', 'kunjungan_id',
+			'id_pengunjung', 'id_kunjungan',
 		];
 
 		public function pengunjung()
     {
-        return $this->belongsTo(Pengunjung::class, 'pengunjung_id');
+        return $this->belongsTo(Pengunjung::class, 'id_pengunjung');
     }
 
 		public function kunjungan()
     {
-        return $this->belongsTo(Kunjungan::class, 'kunjungan_id');
+        return $this->belongsTo(Kunjungan::class, 'id_kunjungan');
     }
 }

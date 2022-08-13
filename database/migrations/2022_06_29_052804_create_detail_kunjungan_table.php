@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('detail_kunjungan', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_detail_kunjungan');
 
-						$table->foreignId('pengunjung_id')->nullable();
-            $table->foreign('pengunjung_id')->references('id')->on('pengunjung')->onDelete('cascade');
+						$table->foreignId('id_pengunjung')->nullable();
+            $table->foreign('id_pengunjung')->references('id_pengunjung')->on('pengunjung')->onDelete('cascade');
 						
-						$table->foreignId('kunjungan_id')->nullable();
-            $table->foreign('kunjungan_id')->references('id')->on('kunjungan')->onDelete('cascade');
+						$table->foreignId('id_kunjungan')->nullable();
+            $table->foreign('id_kunjungan')->references('id_kunjungan')->on('kunjungan')->onDelete('cascade');
 
             $table->timestamps();
         });

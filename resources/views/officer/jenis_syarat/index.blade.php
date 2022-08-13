@@ -1,6 +1,6 @@
 @extends('officer.layout.administrator')
 
-@section('title','Admin - Manajemen Data Jadwal Kunjungan')
+@section('title','Admin - Jenis Syarat')
 
 @push('on-head')
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -30,17 +30,17 @@
 								</a>
 						</li>
 						<li class="breadcrumb-item"><a href="{{route('officer.dashboard')}}">Dashboard</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Jadwal Kunjungan</li>
+						<li class="breadcrumb-item active" aria-current="page">Jenis Syarat</li>
 				</ol>
 		</nav>
 		<div class="d-flex justify-content-between w-100 flex-wrap">
 				<div class="mb-3 mb-lg-0">
-						<h1 class="h4">Informasi Jadwal Kunjungan</h1>
-						<p class="mb-0">Klik tombol tambah untuk menambahkan jadwal kunjungan.</p>
+						<h1 class="h4">Jenis Syarat</h1>
+						<p class="mb-0">Klik tombol tambah untuk menambahkan data.</p>
 				</div>
 
 				<div class="text-end">
-					<a href="{{route('officer.jadwal_kunjungan.create')}}">
+					<a href="{{route('officer.jenis_syarat.create')}}">
 					<button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
 								<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"></path></svg>
 								Tambah
@@ -57,34 +57,17 @@
 								<thead class="thead-light">
 										<tr>
 												<th class="border-0 rounded-start">#</th>
-												<th class="border-0">Petugas</th>
-												<th class="border-0">Hari</th>
-												<th class="border-0">Jam Mulai</th>
-												<th class="border-0">Jam Selesai</th>
+												<th class="border-0">Nama Syarat</th>
 												<th class="border-0">Status</th>
-												<th class="border-0">Kapasitas</th>
 												<th class="border-0"></th>
 										</tr>
 								</thead>
 								<tbody>
-									@foreach ($jadwal_kunjungan as $data)
+									@foreach ($jenis_syarat as $data)
 									<tr>
 											<td>{{ $loop->iteration }}</td>
 											<td class="fw-bold align-items-center">
-													<svg class="icon icon-xxs text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-													{{$data->petugas->nama_petugas}}
-											</td>
-											<td>
-													@php
-														$day = array("Mon"=>"Senin","Tue"=>"Selasa","Wed"=>"Rabu","Thu"=>"Kamis");
-														echo $day[date('D', strtotime($data->hari))];
-													@endphp
-											</td>
-											<td class="small fw-bold">
-												{{ $data->jam_mulai }}
-											</td>
-											<td class="small fw-bold">
-												{{ $data->jam_selesai }}
+													{{$data->nama_syarat}}
 											</td>
 											<td>
 												@if ($data->status == 'y')
@@ -94,10 +77,7 @@
 												@endif
 											</td>
 											<td>
-												{{ $data->kapasitas }}
-											</td>
-											<td class="text-success">
-												<a href="{{route('officer.jadwal_kunjungan.edit', $data->id_jadwal_kunjungan)}}">
+												<a href="{{route('officer.jenis_syarat.edit', $data->id_jenis_syarat)}}">
 													<button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
 															<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
 															Edit
@@ -115,72 +95,4 @@
 		</div>
 </div>
 
-
 @endsection
-
-@push('after-script')
-<script type="application/javascript">
-
-	function deleteItem(e){
-
-			let id = e.getAttribute('data-id');
-
-			const swalWithBootstrapButtons = Swal.mixin({
-					customClass: {
-							confirmButton: 'btn btn-success mx-3',
-							cancelButton: 'btn btn-danger mx-3'
-					},
-					buttonsStyling: false
-			});
-
-			swalWithBootstrapButtons.fire({
-					title: 'Apakah anda yakin?',
-					text: "Konfirmasi tombol dibawah ini.",
-					icon: 'warning',
-					showCancelButton: true,
-					confirmButtonText: 'Hapus',
-					cancelButtonText: 'Batal',
-					reverseButtons: true
-			}).then((result) => {
-					if (result.value) {
-							if (result.isConfirmed){
-
-									$.ajax({
-											type:'DELETE',
-											url:'{{url("officer/data/jadwal_kunjungan")}}/'+id,
-											data:{
-													"_token": "{{ csrf_token() }}",
-											},
-											success:function(data) {
-													if (data.success){
-															swalWithBootstrapButtons.fire({
-																	title: "Sukses",
-																	text: "Data berhasil dihapus.",
-																	type: "success",
-																	icon: 'success',
-															})
-															.then(function() {
-																window.location.href = "/officer/data/jadwal_kunjungan";
-															});
-													}
-
-											}
-									});
-
-							}
-
-					} else if (
-							result.dismiss === Swal.DismissReason.cancel
-					) {
-							swalWithBootstrapButtons.fire(
-									'Cancelled',
-									'Hapus data dibatalkan.',
-									'error'
-							);
-					}
-			});
-
-	}
-
-</script>
-@endpush

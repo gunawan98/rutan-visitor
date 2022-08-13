@@ -19,31 +19,22 @@ class PengunjungSeeder extends Seeder
 			$data = [
 				[
 					'nik' => Str::random(16),
-					'nama' => 'Tono Sudiro',
+					'nama_pengunjung' => 'Tono Sudiro',
 					'jenis_kelamin' => 'laki-laki',
 					'no_telepon' => '085222333444',
 					'alamat' => 'Gang Buntu - Desa Penari',
-					'email' => 'tono@test.com',
+					'username' => 'tono',
 					'password' => Hash::make('qwerty'),
 					'status' => 'y',
 				],[
 					'nik' => Str::random(16),
-					'nama' => 'Winny Poo',
+					'nama_pengunjung' => 'Winny Poo',
 					'jenis_kelamin' => 'perempuan',
 					'no_telepon' => '085222333555',
 					'alamat' => 'Jl. Mulu No.00 - Desa Gir Sereng',
-					'email' => 'winny@test.com',
+					'username' => 'winny',
 					'password' => Hash::make('qwerty'),
-					'status' => 'y',
-				],[
-					'nik' => Str::random(16),
-					'nama' => 'Tja Purno',
-					'jenis_kelamin' => 'laki-laki',
-					'no_telepon' => '085222333556',
-					'alamat' => 'Jl. Sudirman No.02 - Citayem',
-					'email' => 'tja@test.com',
-					'password' => Hash::make('qwerty'),
-					'status' => 'y',
+					'status' => 't',
 				],
 			];
 

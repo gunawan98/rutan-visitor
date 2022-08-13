@@ -12,16 +12,16 @@ class DetailKeluarga extends Model
 		protected $table = 'detail_keluarga';
 
 		protected $fillable = [
-			'pengunjung_id', 'warga_rutan_id', 'status_keluarga',
+			'id_pengunjung', 'id_warga_rutan', 'status_keluarga',
 		];
 
 		public function pengunjung()
     {
-        return $this->belongsTo(Pengunjung::class, 'pengunjung_id');
+        return $this->belongsTo(Pengunjung::class, 'id_pengunjung');
     }
 
 		public function warga_rutan()
     {
-        return $this->belongsTo(WargaRutan::class, 'warga_rutan_id');
+        return $this->belongsTo(WargaRutan::class, 'id_warga_rutan');
     }
 }

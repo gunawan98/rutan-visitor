@@ -58,17 +58,17 @@
 								<div class="card-body">     
 										<div class="row mb-4">
 												<div class="col-lg-12 col-sm-12">
-													<form action="{{route('officer.petugas.update', $data->id)}}" method="post">
+													<form action="{{route('officer.petugas.update', $data->id_petugas)}}" method="post">
 														@csrf
 														@method('put')
 														<div class="mb-3">
-																<label for="nama">Nama</label>
+																<label for="nama_petugas">Nama</label>
 																<div class="input-group">
 																		<span class="input-group-text" id="basic-addon1">
 																				<svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>  
 																		</span>
-																		<input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" value="{{ $data->nama }}" aria-label="nama">
-																		@error('nama')
+																		<input type="text" class="form-control @error('nama_petugas') is-invalid @enderror" name="nama_petugas" value="{{ $data->nama_petugas }}" aria-label="nama_petugas">
+																		@error('nama_petugas')
 																		<div class="invalid-feedback">{{ $message }}</div>
 																		@enderror
 																</div>
@@ -96,13 +96,13 @@
 														</div>
 
 														<div class="mb-3">
-																<label for="email">Email</label>
+																<label for="username">Username</label>
 																<div class="input-group">
 																		<span class="input-group-text" id="basic-addon1">
 																				<svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>  
 																		</span>
-																		<input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $data->email }}" aria-label="email">
-																		@error('email')
+																		<input type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ $data->username }}" aria-label="username">
+																		@error('username')
 																		<div class="invalid-feedback">{{ $message }}</div>
 																		@enderror
 																</div>

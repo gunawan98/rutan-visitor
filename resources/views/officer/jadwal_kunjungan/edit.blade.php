@@ -80,18 +80,18 @@
 								<div class="card-body">     
 										<div class="row mb-4">
 												<div class="col-lg-12 col-sm-12">
-													<form action="{{route('officer.jadwal_kunjungan.update', $data->id)}}" method="post">
+													<form action="{{route('officer.jadwal_kunjungan.update', $data->id_jadwal_kunjungan)}}" method="post">
 														@csrf
 														@method('put')
 														<div class="mb-3">
-																<label for="petugas_id">Petugas</label>
+																<label for="id_petugas">Petugas</label>
 																<div class="input-group">
-																		<select name="petugas_id" class="form-select">
+																		<select name="id_petugas" class="form-select">
 																			@foreach ($petugas as $data_petugas)
-																				<option value="{{$data_petugas->id}}" {{ ($data_petugas->id == $data->petugas_id) ? 'selected' : '' }}>{{$data_petugas->nama}}</option>
+																				<option value="{{$data_petugas->id_petugas}}" {{ ($data_petugas->id_petugas == $data->id_petugas) ? 'selected' : '' }}>{{$data_petugas->nama_petugas}}</option>
 																			@endforeach
 																		</select>
-																		@error('petugas_id')
+																		@error('id_petugas')
 																		<div class="invalid-feedback">{{ $message }}</div>
 																		@enderror
 																</div>

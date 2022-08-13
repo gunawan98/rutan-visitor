@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Officer;
 use App\Http\Controllers\Controller;
 use App\Models\JadwalJaga;
 use App\Models\Kunjungan;
+use App\Models\Pengunjung;
 use App\Models\Petugas;
-use App\Models\User;
 use App\Models\WargaRutan;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -17,14 +17,14 @@ class MainController extends Controller
 {
     public function index()
     {
-			$total_users = User::count();
-			$oldest_users = User::orderBy('created_at', 'desc')->first();
+			$total_warga_rutan = WargaRutan::count();
+			$oldest_warga_rutan = WargaRutan::orderBy('created_at', 'desc')->first();
+
+			$total_pengunjung = Pengunjung::count();
+			$oldest_pengunjung = Pengunjung::orderBy('created_at', 'desc')->first();
 			
-			$total_tahanan = WargaRutan::where('tipe', 'tahanan')->count();
-			$oldest_tahanan = WargaRutan::where('tipe', 'tahanan')->orderBy('created_at', 'desc')->first();
-			
-			$total_pidana = WargaRutan::where('tipe', 'pidana')->count();
-			$oldest_pidana = WargaRutan::where('tipe', 'pidana')->orderBy('created_at', 'desc')->first();
+			$total_kunjungan = Kunjungan::count();
+			$oldest_kunjungan = Kunjungan::orderBy('created_at', 'desc')->first();
 
 			$visitor_month = Kunjungan::select(DB::raw("(COUNT(*)) as count"), DB::raw("MONTHNAME(tanggal_kunjungan) as monthname"))
             ->whereYear('tanggal_kunjungan', date('Y'))
@@ -36,12 +36,12 @@ class MainController extends Controller
 			$total_visitor_new = Kunjungan::where('tanggal_kunjungan', '>', now())->count();
 
       return view('officer.dashboard', compact(
-				'total_users',
-				'oldest_users',
-				'total_tahanan',
-				'oldest_tahanan',
-				'total_pidana',
-				'oldest_pidana',
+				'total_pengunjung',
+				'oldest_pengunjung',
+				'total_warga_rutan',
+				'oldest_warga_rutan',
+				'total_kunjungan',
+				'oldest_kunjungan',
 				'visitor_chart',
 				'total_visitor',
 				'total_visitor_new'
@@ -50,12 +50,13 @@ class MainController extends Controller
 
 		public function jadwal_jaga()
 		{
-			$data_petugas = Petugas::all();
-			$data_mon = JadwalJaga::with('petugas')->where('hari', 'Mon')->get();
-			$data_tue = JadwalJaga::with('petugas')->where('hari', 'Tue')->get();
-			$data_wed = JadwalJaga::with('petugas')->where('hari', 'Wed')->get();
-			$data_thu = JadwalJaga::with('petugas')->where('hari', 'Thu')->get();
-			return view('officer.additional.jadwal_jaga', compact('data_petugas', 'data_mon', 'data_tue', 'data_wed', 'data_thu'));
+			dd('tes');
+			// $data_petugas = Petugas::all();
+			// $data_mon = JadwalJaga::with('petugas')->where('hari', 'Mon')->get();
+			// $data_tue = JadwalJaga::with('petugas')->where('hari', 'Tue')->get();
+			// $data_wed = JadwalJaga::with('petugas')->where('hari', 'Wed')->get();
+			// $data_thu = JadwalJaga::with('petugas')->where('hari', 'Thu')->get();
+			// return view('officer.additional.jadwal_jaga', compact('data_petugas', 'data_mon', 'data_tue', 'data_wed', 'data_thu'));
 		}
 
 		public function create_jadwal(Request $request)

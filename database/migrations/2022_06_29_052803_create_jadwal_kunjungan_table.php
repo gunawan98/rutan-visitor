@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('jadwal_kunjungan', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_jadwal_kunjungan');
 
-						$table->foreignId('petugas_id')->nullable();
-            $table->foreign('petugas_id')->references('id')->on('petugas')->onDelete('cascade');
+						$table->foreignId('id_petugas')->nullable();
+            $table->foreign('id_petugas')->references('id_petugas')->on('petugas')->onDelete('cascade');
 
-						$table->string('hari');
+						$table->string('hari', 10);
 						$table->time('jam_mulai', $precision = 0);
 						$table->time('jam_selesai', $precision = 0);
-						$table->string('kapasitas');
+						$table->string('kapasitas', 45);
 						$table->enum('status', ['y', 't']);
             $table->timestamps();
         });

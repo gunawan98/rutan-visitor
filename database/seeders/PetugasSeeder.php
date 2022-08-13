@@ -17,34 +17,34 @@ class PetugasSeeder extends Seeder
     {
 			$data = [
 				[
-					'nama' => 'Hartono S.H',
+					'nama_petugas' => 'Hartono S.H',
 					'alamat' => 'Paiton',
 					'no_telepon' => '089334556781',
-					'email' => '089334556781',
+					'username' => 'hartono',
 					'password' => Hash::make('qwerty'),
 				],[
-					'nama' => 'Sugiman S.H',
+					'nama_petugas' => 'Sugiman S.H',
 					'alamat' => 'Kraksaan',
 					'no_telepon' => '089334556782',
-					'email' => '089334556782',
+					'username' => 'sugiman',
 					'password' => Hash::make('qwerty'),
 				],[
-					'nama' => 'Wayan Kartono ',
+					'nama_petugas' => 'Wayan Kartono ',
 					'alamat' => 'Besuk',
 					'no_telepon' => '089334556783',
-					'email' => '089334556783',
+					'username' => 'wayan',
 					'password' => Hash::make('qwerty'),
 				],[
-					'nama' => 'Jumari',
+					'nama_petugas' => 'Jumari',
 					'alamat' => 'Paiton',
 					'no_telepon' => '089334556784',
-					'email' => '089334556784',
+					'username' => 'jumari',
 					'password' => Hash::make('qwerty'),
 				],[
-					'nama' => 'Suden',
+					'nama_petugas' => 'Suden',
 					'alamat' => 'Kraksaan',
 					'no_telepon' => '089334556785',
-					'email' => '089334556785',
+					'username' => 'suden',
 					'password' => Hash::make('qwerty'),
 				]
 			];

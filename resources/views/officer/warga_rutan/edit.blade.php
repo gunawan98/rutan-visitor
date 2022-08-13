@@ -58,7 +58,7 @@
 								<div class="card-body">     
 										<div class="row mb-4">
 												<div class="col-lg-12 col-sm-12">
-													<form action="{{route('officer.warga_rutan.update', $data->id)}}" method="post">
+													<form action="{{route('officer.warga_rutan.update', $data->id_warga_rutan)}}" method="post">
 															@csrf
 															@method('put')
 															<div class="mb-3">
@@ -72,13 +72,13 @@
 															</div>
 
 															<div class="mb-3">
-																	<label for="nama">Nama</label>
+																	<label for="nama_warga_rutan">Nama</label>
 																	<div class="input-group">
 																			<span class="input-group-text" id="basic-addon1">
 																					<svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>  
 																			</span>
-																			<input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" value="{{ $data->nama }}" aria-label="nama">
-																			@error('nama')
+																			<input type="text" class="form-control @error('nama_warga_rutan') is-invalid @enderror" name="nama_warga_rutan" value="{{ $data->nama_warga_rutan }}" aria-label="nama_warga_rutan">
+																			@error('nama_warga_rutan')
 																			<div class="invalid-feedback">{{ $message }}</div>
 																			@enderror
 																	</div>
@@ -135,14 +135,14 @@
 															</div>
 
 															<div class="mb-3">
-																	<label for="jenis_warga_rutan_id">Tipe Kurungan</label>
+																	<label for="id_jenis_warga_rutan">Tipe Kurungan</label>
 																	<div class="input-group">
-																			<select name="jenis_warga_rutan_id" class="form-select">
+																			<select name="id_jenis_warga_rutan" class="form-select">
 																				@foreach ($jenis_warga_rutan as $item)
-																					<option value="{{$item->id}}" {{ ($item->id == $data->jenis_warga_rutan_id) ? 'selected' : '' }}>{{$item->nama_jenis}}</option>
+																					<option value="{{$item->id_jenis_warga_rutan}}" {{ ($item->id_jenis_warga_rutan == $data->id_jenis_warga_rutan) ? 'selected' : '' }}>{{$item->nama_jenis}}</option>
 																				@endforeach
 																			</select>
-																			@error('jenis_warga_rutan_id')
+																			@error('id_jenis_warga_rutan')
 																			<div class="invalid-feedback">{{ $message }}</div>
 																			@enderror
 																	</div>

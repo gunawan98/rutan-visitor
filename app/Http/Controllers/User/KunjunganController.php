@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\JadwalJaga;
 use App\Models\Kunjungan;
-use App\Models\User;
+use App\Models\Pengunjung;
 use App\Models\WargaRutan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,14 +14,14 @@ class KunjunganController extends Controller
 {
 		public function index()
 		{
-			$data_user = User::find(Auth::id());
+			$data_user = Pengunjung::find(Auth::id());
 			$data_criminal = WargaRutan::where('user_id', Auth::id())->get();
 			return view('user.daftar_kunjungan', compact('data_user','data_criminal'));
 		}
 
 		public function get_kriminal($id)
 		{
-			$criminal  = WargaRutan::find($id);
+			$criminal  = WargaRutan::with('jenis_warga_rutan')->get()->find($id);
 
 			return response()->json($criminal);
 		}

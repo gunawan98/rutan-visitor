@@ -5,6 +5,7 @@ use App\Http\Controllers\Officer\JadwalKunjunganController;
 use App\Http\Controllers\Officer\MainController;
 use App\Http\Controllers\Officer\PengunjungController;
 use App\Http\Controllers\Officer\PetugasController;
+use App\Http\Controllers\Officer\SettingController;
 use App\Http\Controllers\Officer\UserController;
 use App\Http\Controllers\Officer\VisitorController;
 use App\Http\Controllers\Officer\WargaRutanController;
@@ -20,11 +21,12 @@ Route::get('/', function () {
 //////////////////////////////////////
 // Route USER mulai dari bawah sini --------------
 //////////////////////////////////////
+Route::get('get_kriminal/{criminal}', [KunjunganController::class, 'get_kriminal'])->name('kunjungan.filter.kriminal'); // Menampilkan data kriminal ketika user daftar kunjungan
+
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('dashboard', [InformationController::class, 'index'])->name('dashboard.index');
 
 	Route::get('pendaftaran', [KunjunganController::class, 'index'])->name('kunjungan.index');
-	Route::get('get_kriminal/{criminal}', [KunjunganController::class, 'get_kriminal'])->name('kunjungan.filter.kriminal'); // Menampilkan data kriminal ketika user daftar kunjungan
 	Route::post('pendaftaran', [KunjunganController::class, 'daftar_kunjungan'])->name('kunjungan.store');
 	
 	Route::get('history', [HistoryController::class, 'index'])->name('history.index');
@@ -39,7 +41,7 @@ require __DIR__.'/auth.php';
 
 require __DIR__.'/officerauth.php';
 
-Route::group(['prefix'=>'officer'], function() {
+Route::group(['middleware' => ['auth:officer'], 'prefix'=>'officer'], function() {
 	Route::get('dashboard', [MainController::class, 'index'])->name('officer.dashboard');
 
 	Route::resource('user', UserController::class, ['as'=>'officer']);
@@ -50,6 +52,7 @@ Route::group(['prefix'=>'officer'], function() {
 	Route::get('data/pengunjung/{pengunjung}', [PengunjungController::class, 'edit'])->name('officer.pengunjung.edit');
 	Route::put('data/pengunjung/{pengunjung}', [PengunjungController::class, 'update'])->name('officer.pengunjung.update');
 	Route::delete('data/pengunjung/{pengunjung}', [PengunjungController::class, 'destroy'])->name('officer.pengunjung.destroy');
+	Route::put('data/verify-pengunjung', [PengunjungController::class, 'verify'])->name('officer.pengunjung.verify');
 	
 	Route::get('data/petugas', [PetugasController::class, 'index'])->name('officer.petugas.index');
 	Route::get('data/petugas/create', [PetugasController::class, 'create'])->name('officer.petugas.create');
@@ -71,6 +74,18 @@ Route::group(['prefix'=>'officer'], function() {
 	Route::get('data/jadwal_kunjungan/{jadwal_kunjungan}', [JadwalKunjunganController::class, 'edit'])->name('officer.jadwal_kunjungan.edit');
 	Route::put('data/jadwal_kunjungan/{jadwal_kunjungan}', [JadwalKunjunganController::class, 'update'])->name('officer.jadwal_kunjungan.update');
 	Route::delete('data/jadwal_kunjungan/{jadwal_kunjungan}', [JadwalKunjunganController::class, 'destroy'])->name('officer.jadwal_kunjungan.destroy');
+	
+	Route::get('setting/jenis_syarat', [SettingController::class, 'jenisSyarat'])->name('officer.jenis_syarat.index');
+	Route::get('setting/jenis_syarat/create', [SettingController::class, 'jenisSyaratCreate'])->name('officer.jenis_syarat.create');
+	Route::post('setting/jenis_syarat', [SettingController::class, 'jenisSyaratStore'])->name('officer.jenis_syarat.store');
+	Route::get('setting/jenis_syarat/{jenis_syarat}', [SettingController::class, 'jenisSyaratEdit'])->name('officer.jenis_syarat.edit');
+	Route::put('setting/jenis_syarat/{jenis_syarat}', [SettingController::class, 'jenisSyaratUpdate'])->name('officer.jenis_syarat.update');
+	
+	Route::get('setting/jenis_warga_rutan', [SettingController::class, 'jenisWarga'])->name('officer.jenis_warga_rutan.index');
+	Route::get('setting/jenis_warga_rutan/create', [SettingController::class, 'jenisWargaCreate'])->name('officer.jenis_warga_rutan.create');
+	Route::post('setting/jenis_warga_rutan', [SettingController::class, 'jenisWargaStore'])->name('officer.jenis_warga_rutan.store');
+	Route::get('setting/jenis_warga_rutan/{jenis_warga_rutan}', [SettingController::class, 'jenisWargaEdit'])->name('officer.jenis_warga_rutan.edit');
+	Route::put('setting/jenis_warga_rutan/{jenis_warga_rutan}', [SettingController::class, 'jenisWargaUpdate'])->name('officer.jenis_warga_rutan.update');
 	
 	// Route::get('criminal', [CriminalController::class, 'index'])->name('officer.criminal.index');
 	// Route::get('criminal/create', [CriminalController::class, 'create'])->name('officer.criminal.create');

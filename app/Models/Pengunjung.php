@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +12,7 @@ class Pengunjung extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
 		protected $table = 'pengunjung';
+		protected $primaryKey = 'id_pengunjung';
 
     /**
      * The attributes that are mass assignable.
@@ -21,11 +21,11 @@ class Pengunjung extends Authenticatable
      */
     protected $fillable = [
         'nik',
-        'nama',
+        'nama_pengunjung',
 				'jenis_kelamin',
 				'no_telepon',
 				'alamat',
-        'email',
+        'username',
         'password',
 				'status'
     ];
@@ -51,12 +51,17 @@ class Pengunjung extends Authenticatable
 
 		public function detail_keluarga()
     {
-			return $this->hasMany(DetailKeluarga::class, 'pengunjung_id', 'id');
+			return $this->hasMany(DetailKeluarga::class, 'id_pengunjung', 'id_pengunjung');
+    }
+		
+		public function detail_syarat()
+    {
+			return $this->hasMany(DetailSyarat::class, 'id_pengunjung', 'id_pengunjung');
     }
 		
 		public function detail_kunjungan()
     {
-			return $this->hasMany(DetailKunjungan::class, 'pengunjung_id', 'id');
+			return $this->hasMany(DetailKunjungan::class, 'id_pengunjung', 'id_pengunjung');
     }
 
 }

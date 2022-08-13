@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Officer;
 
 use App\Http\Controllers\Controller;
+use App\Models\DetailSyarat;
 use App\Models\Pengunjung;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class PengunjungController extends Controller
@@ -17,28 +20,28 @@ class PengunjungController extends Controller
 
     public function create()
     {
-			// $data_user = User::select('id','name','no_telepon')->get();
       return view('officer.pengunjung.create');
     }
 
     public function store(Request $request)
     {
-			// $request->validate([
-			// 	'user_id' => ['required', 'integer'],
-			// 	'name' => ['required', 'regex:/^[a-zA-Z ]+$/'],
-			// 	'tipe' => ['required', 'in:pidana,tahanan'],
-			// 	'kasus' => 'required',
-			// 	'no_nik' => ['required', 'numeric', 'digits:16', 'unique:warga_rutan'],
-			// 	'hubungan' => 'required',
-			// ]);
+			$request->validate([
+				'nik' => ['required', 'numeric', 'digits:16', 'unique:pengunjung'],
+				'nama' => ['required', 'regex:/^[a-zA-Z ]+$/'],
+				'jenis_kelamin' => ['required', 'in:laki-laki,perempuan'],
+				'no_telepon' => 'required|numeric|min:10',
+				'alamat' => 'required',
+				'username' => ['required', 'unique:pengunjung'],
+				'password' => 'required'
+			]);
 
 			$pengunjung = new Pengunjung();
 			$pengunjung->nik = $request->nik;
-			$pengunjung->nama = $request->nama;
+			$pengunjung->nama_pengunjung = $request->nama;
 			$pengunjung->jenis_kelamin = $request->jenis_kelamin;
 			$pengunjung->no_telepon = $request->no_telepon;
 			$pengunjung->alamat = $request->alamat;
-			$pengunjung->email = $request->email;
+			$pengunjung->username = $request->username;
 			$pengunjung->password = Hash::make($request->password);
 			$pengunjung->status = 'y';
 			$pengunjung->save();
@@ -48,35 +51,36 @@ class PengunjungController extends Controller
 
     public function edit($id)
     {
-			$data = Pengunjung::find($id);
-			// $data_user = User::select('id','name','no_telepon')->get();
+			$data = Pengunjung::with('detail_syarat')->get()->find($id);
+			// dd($data);
 
       return view('officer.pengunjung.edit', compact('data'));
     }
 
     public function update(Request $request, $id)
     {
-      // $request->validate([
-			// 	'user_id' => ['required', 'integer'],
-			// 	'name' => ['required', 'regex:/^[a-zA-Z ]+$/'],
-			// 	'tipe' => ['required', 'in:pidana,tahanan'],
-			// 	'kasus' => 'required',
-			// 	'no_nik' => 'required|numeric|digits:16|unique:warga_rutan,no_nik,'.$id,
-			// 	'hubungan' => 'required'
-			// ]);
+			// dd($id);
+			$request->validate([
+				// 'nik' => 'required|numeric|digits:16|unique:pengunjung,nik,{$this->pengunjung->id}',
+				'nama' => ['required', 'regex:/^[a-zA-Z ]+$/'],
+				'jenis_kelamin' => ['required', 'in:laki-laki,perempuan'],
+				// 'no_telepon' => 'required|numeric|min:10|unique:pengunjung,no_telepon,{$this->pengunjung->id}',
+				'alamat' => 'required',
+				// 'username' => 'required|unique:pengunjung,username,{$this->pengunjung->id}'
+			]);
 
-			$cek_data = Pengunjung::where('id', $id)->first();
+			$cek_data = Pengunjung::where('id_pengunjung', $id)->first();
 
 			if ($cek_data === null) {
 				return redirect()->back()->with(['warning' => 'Data tidak ditemukan.']);
 			} else {
 				$data = Pengunjung::find($id);
 				$data->nik = $request->nik;
-				$data->nama = $request->nama;
+				$data->nama_pengunjung = $request->nama;
 				$data->jenis_kelamin = $request->jenis_kelamin;
 				$data->no_telepon = $request->no_telepon;
 				$data->alamat = $request->alamat;
-				$data->email = $request->email;
+				$data->username = $request->username;
 
 				if ($request->password) {
 					$data->password = Hash::make($request->password);
@@ -106,4 +110,18 @@ class PengunjungController extends Controller
 
 			}
     }
+
+		public function verify(Request $request)
+		{
+			$pengunjung = Pengunjung::find($request->id_pengunjung);
+			$pengunjung->status = 'y';
+			$pengunjung->save();
+
+			$detail_syarat = DetailSyarat::find($request->id_detail_syarat);
+			$detail_syarat->id_petugas = Auth::id();
+			$detail_syarat->tanggal_verifikasi = Carbon::now()->toDateTimeString();
+			$detail_syarat->save();
+
+			return redirect()->back()->with(['success' => 'Data Pengunjung berhasil di verifikasi.']);
+		}
 }

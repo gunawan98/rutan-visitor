@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +12,7 @@ class Petugas extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
 		protected $guard = 'petugas';
+		protected $primaryKey = 'id_petugas';
 
     /**
      * The attributes that are mass assignable.
@@ -20,10 +20,10 @@ class Petugas extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nama',
+        'nama_petugas',
         'alamat',
         'no_telepon',
-        'email',
+        'username',
         'password',
     ];
 
@@ -48,12 +48,12 @@ class Petugas extends Authenticatable
 
 		public function jadwal_kunjungan()
     {
-			return $this->hasMany(JadwalKunjungan::class, 'petugas_id', 'id');
+			return $this->hasMany(JadwalKunjungan::class, 'id_petugas', 'id_petugas');
     }
 		
 		public function detail_syarat()
     {
-			return $this->hasMany(DetailSyarat::class, 'petugas_id', 'id');
+			return $this->hasMany(DetailSyarat::class, 'id_petugas', 'id_petugas');
     }
 
 }

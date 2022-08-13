@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('jenis_syarat', function (Blueprint $table) {
-            $table->id();
-						$table->string('nama_syarat');
+            $table->id('id_jenis_syarat');
+						$table->string('nama_syarat', 45);
 						$table->enum('status', ['y', 't']);
             $table->timestamps();
         });

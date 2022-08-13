@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
 				PengunjungSeeder::class,
 				JenisWargaSeeder::class,
 				WargaSeeder::class,
+				DetailKeluargaSeeder::class,
+				JenisSyaratSeeder::class,
+				DetailSyaratSeeder::class
 			]);
         // \App\Models\User::factory(10)->create();
 

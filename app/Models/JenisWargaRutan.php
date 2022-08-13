@@ -10,6 +10,7 @@ class JenisWargaRutan extends Model
     use HasFactory;
 
 		protected $table = 'jenis_warga_rutan';
+		protected $primaryKey = 'id_jenis_warga_rutan';
 
 		protected $fillable = [
 			'nama_jenis', 'status'
@@ -17,6 +18,6 @@ class JenisWargaRutan extends Model
 
 		public function warga_rutan()
     {
-			return $this->hasMany(WargaRutan::class, 'jenis_warga_rutan_id', 'id');
+			return $this->hasMany(WargaRutan::class, 'id_jenis_warga_rutan', 'id_jenis_warga_rutan');
     }
 }

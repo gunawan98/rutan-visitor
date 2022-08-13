@@ -62,7 +62,7 @@
           data-bs-toggle="collapse" data-bs-target="#main-menu">
           <span>
             <span class="sidebar-icon">
-              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.788l1.599.799L9 4.323V3a1 1 0 011-1zm-5 8.274l-.818 2.552c.25.112.526.174.818.174.292 0 .569-.062.818-.174L5 10.274zm10 0l-.818 2.552c.25.112.526.174.818.174.292 0 .569-.062.818-.174L15 10.274z" clip-rule="evenodd"></path></svg>
+              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path></svg>
             </span> 
             <span class="sidebar-text">Main Data</span>
           </span>
@@ -97,6 +97,62 @@
         </div>
       </li>
 
+			<li class="nav-item">
+        <span
+          class="nav-link  d-flex justify-content-between align-items-center"
+          data-bs-toggle="collapse" data-bs-target="#setting-menu">
+          <span>
+            <span class="sidebar-icon">
+              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
+            </span> 
+            <span class="sidebar-text">Setting</span>
+          </span>
+          <span class="link-arrow">
+            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+          </span>
+        </span>
+        <div class="multi-level collapse {{ (request()->is('officer/setting/')) || (request()->is('officer/setting/*')) ? 'show' : '' }}"
+          role="list" id="setting-menu" aria-expanded="false">
+          <ul class="flex-column nav">
+            <li class="nav-item {{ (request()->is('officer/setting/jenis_syarat')) || (request()->is('officer/setting/jenis_syarat/*')) ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.jenis_syarat.index') }}">
+                <span class="sidebar-text">Jenis Syarat</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('officer/setting/jenis_warga_rutan')) || (request()->is('officer/setting/jenis_warga_rutan/*')) ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('officer.jenis_warga_rutan.index') }}">
+                <span class="sidebar-text">Jenis Warga Rutan</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+			<li class="nav-item {{ (Request::route()->getName() == 'officer.dashboard') ? 'active' : '' }}">
+        <span class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
+          <span>
+						<a href="{{ route('officer.dashboard') }}">
+							<span class="sidebar-icon">
+							<svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.788l1.599.799L9 4.323V3a1 1 0 011-1zm-5 8.274l-.818 2.552c.25.112.526.174.818.174.292 0 .569-.062.818-.174L5 10.274zm10 0l-.818 2.552c.25.112.526.174.818.174.292 0 .569-.062.818-.174L15 10.274z" clip-rule="evenodd"></path></svg>
+							</span>
+							<span class="sidebar-text">Kunjungan</span>
+						</a>
+					</span>
+        </span>
+      </li>
+
+			<li class="nav-item {{ (Request::route()->getName() == 'officer.dashboard') ? 'active' : '' }}">
+        <span class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
+          <span>
+						<a href="{{ route('officer.dashboard') }}">
+							<span class="sidebar-icon">
+								<svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clip-rule="evenodd"></path></svg>
+							</span>
+							<span class="sidebar-text">Laporan</span>
+						</a>
+					</span>
+        </span>
+      </li>
     </ul>
   </div>
 

@@ -37,7 +37,7 @@ class JadwalKunjunganController extends Controller
 			$rm_selesai = preg_replace('/\s*:\s*/', ':', $request->jam_selesai);
 
 			$jadwal = new JadwalKunjungan();
-			$jadwal->petugas_id = $request->petugas_id;
+			$jadwal->id_petugas = $request->id_petugas;
 			$jadwal->hari = $request->hari;
 			$jadwal->jam_mulai = date("H:i", strtotime($rm_mulai));
 			$jadwal->jam_selesai = date("H:i", strtotime($rm_selesai));
@@ -67,7 +67,7 @@ class JadwalKunjunganController extends Controller
 			// 	'hubungan' => 'required'
 			// ]);
 
-			$cek_data = JadwalKunjungan::where('id', $id)->first();
+			$cek_data = JadwalKunjungan::where('id_jadwal_kunjungan', $id)->first();
 
 			if ($cek_data === null) {
 				return redirect()->back()->with(['warning' => 'Data tidak ditemukan.']);
@@ -76,7 +76,7 @@ class JadwalKunjunganController extends Controller
 				$rm_selesai = preg_replace('/\s*:\s*/', ':', $request->jam_selesai);
 
 				$jadwal = JadwalKunjungan::find($id);
-				$jadwal->petugas_id = $request->petugas_id;
+				$jadwal->id_petugas = $request->id_petugas;
 				$jadwal->hari = $request->hari;
 				$jadwal->jam_mulai = date("H:i", strtotime($rm_mulai));
 				$jadwal->jam_selesai = date("H:i", strtotime($rm_selesai));

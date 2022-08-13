@@ -12,16 +12,16 @@ class Kunjungan extends Model
 		protected $table = 'kunjungan';
 
 		protected $fillable = [
-			'jadwal_id', 'tanggal_kunjungan',
+			'id_jadwal_kunjungan', 'tanggal_kunjungan',
 		];
 
 		public function detail_kunjungan()
     {
-			return $this->hasMany(DetailKunjungan::class, 'kunjungan_id', 'id');
+			return $this->hasMany(DetailKunjungan::class, 'id_kunjungan', 'id_kunjungan');
     }
 
 		public function jadwal_kunjungan()
     {
-      return $this->belongsTo(JadwalKunjungan::class, 'jadwal_id');
+      return $this->belongsTo(JadwalKunjungan::class, 'id_jadwal_kunjungan');
     }
 }
