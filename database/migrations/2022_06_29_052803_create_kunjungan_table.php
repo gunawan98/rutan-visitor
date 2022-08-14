@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('kunjungan', function (Blueprint $table) {
             $table->id('id_kunjungan');
 
-						$table->foreignId('id_jadwal_kunjungan')->nullable();
+						$table->foreignId('id_jadwal_kunjungan');
             $table->foreign('id_jadwal_kunjungan')->references('id_jadwal_kunjungan')->on('jadwal_kunjungan')->onDelete('cascade');
 
 						$table->timestamp('tanggal_kunjungan');

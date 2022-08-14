@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('warga_rutan', function (Blueprint $table) {
             $table->id('id_warga_rutan');
 
-						$table->foreignId('id_jenis_warga_rutan')->nullable();
+						$table->foreignId('id_jenis_warga_rutan');
             $table->foreign('id_jenis_warga_rutan')->references('id_jenis_warga_rutan')->on('jenis_warga_rutan')->onDelete('cascade');
 
 						$table->string('nik', 16)->unique();

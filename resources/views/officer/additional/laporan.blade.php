@@ -25,12 +25,12 @@
 				<div class="card-body">
 
 				<div class="row">
-					<div class="col-md-9"><h4>Pengunjung Tipe Tahanan</h4></div>
+					<div class="col-md-9"><h4>Download Rekap Kunjungan</h4></div>
 					<div class="col-md-3">
-					<a href="{{route('officer.download.tahanan')}}">
+					<a href="{{route('officer.download.kunjungan')}}">
 						<button type="button" class="btn btn-xs btn-secondary align-items-center">
 							<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-							Download
+							Download All
 						</button>
 					</a>
 					</div>
@@ -51,7 +51,7 @@
 							<div class="row">
 								<div class="col-6">
 									<span class="text-danger">
-										<a href="{{route('officer.download.tahanan',['tanggal'=>date('Y-m-d', strtotime($key)), 'total'=>$data->count()])}}">download data {{date('d-m-Y', strtotime($key))}}</a>
+										<a href="{{route('officer.download.kunjungan',['tanggal'=>date('Y-m-d', strtotime($key)), 'total'=>$data->count()])}}">download data {{date('d-m-Y', strtotime($key))}}</a>
 									</span>
 								</div>
 								<div class="col-6">
@@ -59,54 +59,6 @@
 								</div>
 							</div>
 
-						</li>
-						@empty
-						<h6 class="text-muted">Belum ada data terdaftar.</h6>
-					@endforelse
-				</ul>	
-					
-				</div>
-		</div>
-	</div>
-
-	<div class="col-xs-12 col-md-6">
-		<div class="card border-0 shadow mb-4">
-				<div class="card-body">
-
-				<div class="row">
-					<div class="col-md-9"><h4>Pengunjung Tipe Narapidana</h4></div>
-					<div class="col-md-3">
-					<a href="{{route('officer.download.pidana')}}">
-						<button type="button" class="btn btn-xs btn-secondary align-items-center">
-							<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-							Download
-						</button>
-					</a>
-					</div>
-				</div>
-
-				<p></p>
-				<ul class="timeline">
-					@forelse ($inf_pidana as $key => $data)
-						<li class="timeline-item mb-5">
-							<p class="text-muted mb-2 fw-bold">
-								@php
-									$day = array("Mon"=>"Senin","Tue"=>"Selasa","Wed"=>"Rabu","Thu"=>"Kamis");
-									echo $day[date('D', strtotime($key))].", ";
-								@endphp
-								{{date('d-m-Y', strtotime($key))}}
-							</p>
-							
-							<div class="row">
-								<div class="col-6">
-									<span class="text-danger">
-										<a href="{{route('officer.download.pidana',['tanggal' => date('Y-m-d', strtotime($key)), 'total'=>$data->count()])}}">download data {{date('d-m-Y', strtotime($key))}}</a>
-									</span>
-								</div>
-								<div class="col-6">
-									<span class="text-muted" style="font-weight: 200;">{{$data->count()}} data</span>
-								</div>
-							</div>
 						</li>
 						@empty
 						<h6 class="text-muted">Belum ada data terdaftar.</h6>

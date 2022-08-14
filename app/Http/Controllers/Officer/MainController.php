@@ -130,43 +130,24 @@ class MainController extends Controller
 
 		public function laporan()
 		{
-			$inf_tahanan = Kunjungan::with(['user','warga_rutan'])
-															->whereHas('warga_rutan', function ($query) {
-																	$query->where('tipe', "tahanan");
-															})
-															->where('tanggal_kunjungan', '>', now())
+			$inf_tahanan = Kunjungan::with(['detail_kunjungan.pengunjung'])
 															->get()
 															->groupBy(function ($val) {
 																return Carbon::parse($val->tanggal_kunjungan)->format('Y-m-d');
 															});
 			
-			$inf_pidana = Kunjungan::with(['user','warga_rutan'])
-															->whereHas('warga_rutan', function ($query) {
-																	$query->where('tipe', "pidana");
-															})
-															->where('tanggal_kunjungan', '>', now())
-															->get()
-															->groupBy(function ($val) {
-																return Carbon::parse($val->tanggal_kunjungan)->format('Y-m-d');
-															});
-			return view('officer.additional.laporan', compact('inf_tahanan','inf_pidana'));
+			return view('officer.additional.laporan', compact('inf_tahanan'));
 		}
 
-		public function tahananPdf(Request $request)
+		public function kunjunganPdf(Request $request)
     {
 				if ($request->tanggal) {
-					$data_kunjungan = Kunjungan::with(['user','warga_rutan'])
-																		->whereHas('warga_rutan', function ($query) {
-																				$query->where('tipe', "tahanan");
-																		})
+					$data_kunjungan = Kunjungan::with(['jadwal_kunjungan.petugas','detail_kunjungan.pengunjung.detail_keluarga.warga_rutan'])
 																		->whereDate('tanggal_kunjungan', $request->tanggal)
-																		->orderBy('no_antrian', 'asc')
+																		->orderBy('id_kunjungan', 'asc')
 																		->get();
 				} else {
-					$data_kunjungan = Kunjungan::with(['user','warga_rutan'])
-																			->whereHas('warga_rutan', function ($query) {
-																					$query->where('tipe', "tahanan");
-																			})
+					$data_kunjungan = Kunjungan::with(['jadwal_kunjungan.petugas','detail_kunjungan.pengunjung.detail_keluarga.warga_rutan'])
 																			->orderBy('tanggal_kunjungan', 'DESC')
 																			->get();
 				}
@@ -178,41 +159,9 @@ class MainController extends Controller
 					'data_kunjungan' => $data_kunjungan
         ];
         
-        $pdf = Pdf::loadView('tahananPDF', $data);  
+        $pdf = Pdf::loadView('kunjunganPDF', $data);  
 
-        return $pdf->download('tahanan.pdf');
-
-    }
-
-		public function pidanaPdf(Request $request)
-    {
-				if ($request->tanggal) {
-					$data_kunjungan = Kunjungan::with(['user','warga_rutan'])
-																		->whereHas('warga_rutan', function ($query) {
-																				$query->where('tipe', "pidana");
-																		})
-																		->whereDate('tanggal_kunjungan', $request->tanggal)
-																		->orderBy('no_antrian', 'asc')
-																		->get();
-				} else {
-					$data_kunjungan = Kunjungan::with(['user','warga_rutan'])
-																			->whereHas('warga_rutan', function ($query) {
-																					$query->where('tipe', "pidana");
-																			})
-																			->orderBy('tanggal_kunjungan', 'DESC')
-																			->get();
-				}
-				
-        $data = [
-					'title' => 'Data Kunjungan Narapidana',
-					'date' => $request->tanggal,
-					'total' => $request->total,
-					'data_kunjungan' => $data_kunjungan
-        ];
-        
-        $pdf = Pdf::loadView('pidanaPDF', $data);  
-
-        return $pdf->download('pidana.pdf');
+        return $pdf->download('kunjungan.pdf');
 
     }
 

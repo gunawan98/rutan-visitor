@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('detail_kunjungan', function (Blueprint $table) {
             $table->id('id_detail_kunjungan');
 
-						$table->foreignId('id_pengunjung')->nullable();
+						$table->foreignId('id_pengunjung');
             $table->foreign('id_pengunjung')->references('id_pengunjung')->on('pengunjung')->onDelete('cascade');
 						
-						$table->foreignId('id_kunjungan')->nullable();
+						$table->foreignId('id_kunjungan');
             $table->foreign('id_kunjungan')->references('id_kunjungan')->on('kunjungan')->onDelete('cascade');
 
             $table->timestamps();

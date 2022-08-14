@@ -128,10 +128,10 @@
         </div>
       </li>
 
-			<li class="nav-item {{ (Request::route()->getName() == 'officer.dashboard') ? 'active' : '' }}">
+			<li class="nav-item {{ (Request::route()->getName() == 'officer.visitor.kunjungan') ? 'active' : '' }}">
         <span class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
           <span>
-						<a href="{{ route('officer.dashboard') }}">
+						<a href="{{ route('officer.visitor.kunjungan') }}">
 							<span class="sidebar-icon">
 							<svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.788l1.599.799L9 4.323V3a1 1 0 011-1zm-5 8.274l-.818 2.552c.25.112.526.174.818.174.292 0 .569-.062.818-.174L5 10.274zm10 0l-.818 2.552c.25.112.526.174.818.174.292 0 .569-.062.818-.174L15 10.274z" clip-rule="evenodd"></path></svg>
 							</span>
@@ -141,10 +141,10 @@
         </span>
       </li>
 
-			<li class="nav-item {{ (Request::route()->getName() == 'officer.dashboard') ? 'active' : '' }}">
+			<li class="nav-item {{ (Request::route()->getName() == 'officer.laporan') ? 'active' : '' }}">
         <span class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
           <span>
-						<a href="{{ route('officer.dashboard') }}">
+						<a href="{{ route('officer.laporan') }}">
 							<span class="sidebar-icon">
 								<svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clip-rule="evenodd"></path></svg>
 							</span>

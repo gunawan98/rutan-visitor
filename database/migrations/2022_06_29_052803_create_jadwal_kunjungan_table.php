@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('jadwal_kunjungan', function (Blueprint $table) {
             $table->id('id_jadwal_kunjungan');
 
-						$table->foreignId('id_petugas')->nullable();
+						$table->foreignId('id_petugas');
             $table->foreign('id_petugas')->references('id_petugas')->on('petugas')->onDelete('cascade');
 
 						$table->string('hari', 10);

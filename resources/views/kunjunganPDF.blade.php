@@ -21,16 +21,15 @@
 
     <table class="table table-bordered">
 				<tr>
-						<th>No. Antri</th>
 						<th>Tanggal</th>
-						<th>Jam</th>
-						<th>Nama Akun</th>
+						<th>Waktu</th>
+						<th>Petugas</th>
+						<th>Nama Pengunjung</th>
 						<th>Warga Rutan</th>
 				</tr>
 
         @foreach ($data_kunjungan as $data)
         <tr>
-            <td>{{ $data->no_antrian }}</td>
             <td>
 							@php
 								$day = array("Mon"=>"Senin","Tue"=>"Selasa","Wed"=>"Rabu","Thu"=>"Kamis");
@@ -42,11 +41,20 @@
 							{{date('H:i', strtotime($data->tanggal_kunjungan))}} - {{date('H:i', strtotime($data->tanggal_kunjungan.'+ 5 minute'))}}
 						</td>
 						<td>
-								{{$data->user->name}}
+								{{$data->jadwal_kunjungan->petugas->nama_petugas}}
 						</td>
-						<td>
-								{{$data->warga_rutan->name}}
-						</td>
+						@foreach ($data->detail_kunjungan as $detail_kunjungan)
+							
+							<td>
+									{{$detail_kunjungan->pengunjung->nama_pengunjung}}
+							</td>
+							<td>
+								@foreach ($detail_kunjungan->pengunjung->detail_keluarga as $detail_keluarga)
+									{{$detail_keluarga->warga_rutan->nama_warga_rutan}}
+								@endforeach
+							</td>
+							
+						@endforeach
         </tr>
 
         @endforeach

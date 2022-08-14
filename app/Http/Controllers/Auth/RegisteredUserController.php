@@ -84,7 +84,7 @@ class RegisteredUserController extends Controller
 					$detail_syarat->save();
 				}
 
-				return back();
+				return redirect()->route('login');
 				
 
         // $user = User::create([

@@ -1,6 +1,6 @@
 @extends('officer.layout.administrator')
 
-@section('title','Admin - Manajemen Data Pengunjung')
+@section('title','Admin - Kunjungan')
 
 @section('content')
 
@@ -13,24 +13,19 @@
 								</a>
 						</li>
 						<li class="breadcrumb-item"><a href="{{route('officer.dashboard')}}">Dashboard</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Kunjungan Tipe Pidana</li>
+						<li class="breadcrumb-item active" aria-current="page">Kunjungan</li>
 				</ol>
 		</nav>
 		<div class="d-flex justify-content-between w-100 flex-wrap">
 				<div class="mb-3 mb-lg-0">
-						<h1 class="h4">Daftar Kunjungan Tipe Pidana</h1>
-						<p class="mb-0">Untuk memfilter data silahkan pilih filter pada tombol sebelah kanan.</p>
+						<h1 class="h4">Daftar Kunjungan</h1>
+						<p class="mb-0">Untuk memfilter data silahkan pilih tanggal pada tombol sebelah kanan.</p>
 				</div>
 				<div class="text-end">
 					<form class="row g-3" method="GET">
 						<div class="row g-3">
-							<div class="col-sm-5 me-6">
-								<select class="form-select ms-6" name="filter">
-									<option value="">Default</option>
-									@foreach ($date_draft as $key => $data)
-										<option value="{{date('Y-m-d', strtotime($key))}}">{{date('Y-m-d', strtotime($key))}}</option>
-									@endforeach
-								</select>
+							<div class="col-sm-6">
+								<input data-datepicker="" class="form-control" name="filter" type="text" placeholder="{{ app('request')->input('filter') }}" required>
 							</div>
 							<div class="col-sm-1">
 								<button type="submit" class="btn btn-primary mb-3">Search</button>
@@ -47,11 +42,11 @@
 						<table class="table table-centered table-nowrap mb-0 rounded">
 								<thead class="thead-light">
 										<tr>
-												<th class="border-0 rounded-start">No. Antri</th>
+												<th class="border-0 rounded-start">No.</th>
 												<th class="border-0">Tanggal</th>
 												<th class="border-0">Jam</th>
-												<th class="border-0">Nama Akun</th>
-												<th class="border-0">Warga Rutan</th>
+												<th class="border-0">Nama Pengunjung</th>
+												<th class="border-0">Alamat</th>
 												<th class="border-0"></th>
 										</tr>
 								</thead>
@@ -60,7 +55,7 @@
 									<tr>
 											<td class="text-center">
 												<strong>
-													{{ $data->no_antrian }}
+													{{ $loop->iteration }}
 												</strong>
 											</td>
 											<td>
@@ -75,13 +70,17 @@
 											</td>
 											<td class="fw-bold align-items-center">
 													<svg class="icon icon-xxs text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-													{{$data->user->name}}
+													@foreach ($data->detail_kunjungan as $detail_kunjungan)
+														{{$detail_kunjungan->pengunjung->nama_pengunjung}}
+													@endforeach
 											</td>
 											<td>
-													{{$data->warga_rutan->name}}
+												@foreach ($data->detail_kunjungan as $detail_kunjungan)
+													{{$detail_kunjungan->pengunjung->alamat}}
+												@endforeach
 											</td>
 											<td class="text-success">
-												<a href="{{route('officer.visitor.kunjungan.detail', $data->id)}}">
+												<a href="{{route('officer.visitor.kunjungan.detail', $data->id_kunjungan)}}">
 													<button type="button" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
 															<svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
 															Detail
