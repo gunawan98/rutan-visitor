@@ -69,6 +69,7 @@ class KunjunganController extends Controller
 									$kunjungan = new Kunjungan();
 									$kunjungan->id_jadwal_kunjungan = $jadwalDB->id_jadwal_kunjungan;
 									$kunjungan->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime("$date $jadwalDB->jam_mulai"));
+									$kunjungan->no_antri = 1;
 									$saved = $kunjungan->save();
 
 									if ($saved) {
@@ -84,10 +85,12 @@ class KunjunganController extends Controller
 									$last_visitor = Kunjungan::whereDate('tanggal_kunjungan', $input_date)
 																					->orderBy('tanggal_kunjungan', 'desc')
 																					->first();
+									$no_antri = $last_visitor->no_antri + 1;
 									
 									$kunjungan = new Kunjungan();
 									$kunjungan->id_jadwal_kunjungan = $jadwalDB->id_jadwal_kunjungan;
 									$kunjungan->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime($last_visitor->tanggal_kunjungan.'+ 5 minute'));
+									$kunjungan->no_antri = $no_antri;
 									$saved = $kunjungan->save();
 
 									if ($saved) {
@@ -133,6 +136,7 @@ class KunjunganController extends Controller
 									$kunjungan = new Kunjungan();
 									$kunjungan->id_jadwal_kunjungan = $jadwalDB->id_jadwal_kunjungan;
 									$kunjungan->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime("$date $jadwalDB->jam_mulai"));
+									$kunjungan->no_antri = 1;
 									$saved = $kunjungan->save();
 
 									if ($saved) {
@@ -148,10 +152,12 @@ class KunjunganController extends Controller
 									$last_visitor = Kunjungan::whereDate('tanggal_kunjungan', $input_date)
 																					->orderBy('tanggal_kunjungan', 'desc')
 																					->first();
+									$no_antri = $last_visitor->no_antri + 1;
 									
 									$kunjungan = new Kunjungan();
 									$kunjungan->id_jadwal_kunjungan = $jadwalDB->id_jadwal_kunjungan;
 									$kunjungan->tanggal_kunjungan = date('Y-m-d H:i:s', strtotime($last_visitor->tanggal_kunjungan.'+ 5 minute'));
+									$kunjungan->no_antri = $no_antri;
 									$saved = $kunjungan->save();
 
 									if ($saved) {

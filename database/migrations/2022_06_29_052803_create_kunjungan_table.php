@@ -19,6 +19,7 @@ return new class extends Migration
 						$table->foreignId('id_jadwal_kunjungan');
             $table->foreign('id_jadwal_kunjungan')->references('id_jadwal_kunjungan')->on('jadwal_kunjungan')->onDelete('cascade');
 
+						$table->integer('no_antri');
 						$table->timestamp('tanggal_kunjungan');
             $table->timestamps();
         });

@@ -31,10 +31,10 @@
 							<div class="card border-0 shadow components-section">
 									<div class="card-body">     
 										<div class="row">
-												<!-- <div class="row pb-2 g-0">
+												<div class="row pb-2 g-0">
 													<div class="col-sm-6 col-md-4 fw-bolder">No. Antri</div>
-													<div class="col-6 col-md-8 text-muted">: 00</div>
-												</div> -->
+													<div class="col-6 col-md-8 text-muted">: {{$kunjungan->no_antri}}</div>
+												</div>
 												<div class="row pb-2 g-0">
 													<div class="col-sm-6 col-md-4 fw-bolder">Tanggal</div>
 													<div class="col-6 col-md-8 text-muted">: 

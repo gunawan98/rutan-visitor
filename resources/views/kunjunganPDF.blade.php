@@ -21,6 +21,7 @@
 
     <table class="table table-bordered">
 				<tr>
+						<th>No. Antri</th>
 						<th>Tanggal</th>
 						<th>Waktu</th>
 						<th>Petugas</th>
@@ -30,6 +31,7 @@
 
         @foreach ($data_kunjungan as $data)
         <tr>
+						<td>{{$data->no_antri}}</td>
             <td>
 							@php
 								$day = array("Mon"=>"Senin","Tue"=>"Selasa","Wed"=>"Rabu","Thu"=>"Kamis");

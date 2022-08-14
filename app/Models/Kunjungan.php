@@ -13,7 +13,7 @@ class Kunjungan extends Model
 		protected $primaryKey = 'id_kunjungan';
 
 		protected $fillable = [
-			'id_jadwal_kunjungan', 'tanggal_kunjungan',
+			'id_jadwal_kunjungan', 'tanggal_kunjungan', 'no_antri'
 		];
 
 		public function detail_kunjungan()

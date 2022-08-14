@@ -42,7 +42,7 @@
 						<table class="table table-centered table-nowrap mb-0 rounded">
 								<thead class="thead-light">
 										<tr>
-												<th class="border-0 rounded-start">No.</th>
+												<th class="border-0 rounded-start">No. Antri</th>
 												<th class="border-0">Tanggal</th>
 												<th class="border-0">Jam</th>
 												<th class="border-0">Nama Pengunjung</th>
@@ -55,7 +55,7 @@
 									<tr>
 											<td class="text-center">
 												<strong>
-													{{ $loop->iteration }}
+													{{ $data->no_antri }}
 												</strong>
 											</td>
 											<td>
