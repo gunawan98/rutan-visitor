@@ -234,6 +234,50 @@
 										@endforeach
 							</div>
 					</div>
+
+					<div class="col-12">
+							<div class="card card-body border-0 shadow mb-4">
+								<div class="row">
+									<div class="col-9">
+										<div class="pb-2">
+											<h4>Detail Warga Rutan</h4>
+										</div>
+
+											<div class="row pb-2 g-0">
+												<div class="col-sm-6 col-md-6 fw-bolder">Status Keluarga</div>
+												<div class="col-6 col-md-6 text-muted">: {{$detail_keluarga->status_keluarga}}</div>
+											</div>
+											<div class="row pb-2 g-0">
+												<div class="col-sm-6 col-md-6 fw-bolder">Nomor NIK</div>
+												<div class="col-6 col-md-6 text-muted">: {{$detail_keluarga->warga_rutan->nik}}</div>
+											</div>
+											<div class="row pb-2 g-0">
+												<div class="col-sm-6 col-md-6 fw-bolder">Nama</div>
+												<div class="col-6 col-md-6 text-muted">: {{$detail_keluarga->warga_rutan->nama_warga_rutan}}</div>
+											</div>
+											<div class="row pb-2 g-0">
+												<div class="col-sm-6 col-md-6 fw-bolder">Jenis Kelamin</div>
+												<div class="col-6 col-md-6 text-muted">: {{$detail_keluarga->warga_rutan->jenis_kelamin}}</div>
+											</div>
+											<div class="row pb-2 g-0">
+												<div class="col-sm-6 col-md-6 fw-bolder">Alamat</div>
+												<div class="col-6 col-md-6 text-muted">: {{$detail_keluarga->warga_rutan->alamat}}</div>
+											</div>
+											<div class="row pb-2 g-0">
+												<div class="col-sm-6 col-md-6 fw-bolder">Tipe Kurungan</div>
+												<div class="col-6 col-md-6 text-muted">: {{$detail_keluarga->warga_rutan->jenis_warga_rutan->nama_jenis}}</div>
+											</div>
+											<div class="row pb-2 g-0">
+												<div class="col-sm-6 col-md-6 fw-bolder">Kasus</div>
+												<div class="col-6 col-md-6 text-muted">: {{$detail_keluarga->warga_rutan->kasus}}</div>
+											</div>
+											
+									</div>
+
+								</div>
+							</div>
+					</div>
+
 			</div>
 	</div>
 		

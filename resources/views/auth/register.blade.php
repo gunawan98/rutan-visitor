@@ -154,6 +154,16 @@
 																						<div class="invalid-feedback">{{ $message }}</div>
 																						@enderror
 																					</div>
+
+																					<div class="mb-3">
+																							<label for="status_keluarga">Hubungan Keluarga</label>
+																							<div class="input-group">
+																									<input type="text" class="form-control @error('status_keluarga') is-invalid @enderror" name="status_keluarga" value="{{ old('status_keluarga') }}" aria-label="status_keluarga">
+																									@error('status_keluarga')
+																									<div class="invalid-feedback">{{ $message }}</div>
+																									@enderror
+																							</div>
+																					</div>
 																				</div>
 
 																				<div class="row pb-2 pt-2 g-0" style="border-top: 1px dashed gray;">

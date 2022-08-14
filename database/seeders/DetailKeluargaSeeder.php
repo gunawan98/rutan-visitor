@@ -18,11 +18,11 @@ class DetailKeluargaSeeder extends Seeder
 				[
 					'id_pengunjung' => 1,
 					'id_warga_rutan' => 1,
-					'status_keluarga' => 'y'
+					'status_keluarga' => 'Saudara Sepupu'
 				],[
 					'id_pengunjung' => 2,
 					'id_warga_rutan' => 2,
-					'status_keluarga' => 'y'
+					'status_keluarga' => 'Kakak Sambung'
 				]
 			];
 

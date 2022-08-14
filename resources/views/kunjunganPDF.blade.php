@@ -27,11 +27,12 @@
 						<th>Petugas</th>
 						<th>Nama Pengunjung</th>
 						<th>Warga Rutan</th>
+						<th>Status Keluarga</th>
 				</tr>
 
         @foreach ($data_kunjungan as $data)
         <tr>
-						<td>{{$data->no_antri}}</td>
+						<td class="text-center fw-900">{{$data->no_antri}}</td>
             <td>
 							@php
 								$day = array("Mon"=>"Senin","Tue"=>"Selasa","Wed"=>"Rabu","Thu"=>"Kamis");
@@ -50,11 +51,14 @@
 							<td>
 									{{$detail_kunjungan->pengunjung->nama_pengunjung}}
 							</td>
+							@foreach ($detail_kunjungan->pengunjung->detail_keluarga as $detail_keluarga)
 							<td>
-								@foreach ($detail_kunjungan->pengunjung->detail_keluarga as $detail_keluarga)
 									{{$detail_keluarga->warga_rutan->nama_warga_rutan}}
-								@endforeach
 							</td>
+							<td>
+									{{$detail_keluarga->status_keluarga}}
+							</td>
+							@endforeach
 							
 						@endforeach
         </tr>

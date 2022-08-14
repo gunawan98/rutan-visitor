@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Officer;
 
 use App\Http\Controllers\Controller;
+use App\Models\DetailKeluarga;
 use App\Models\DetailSyarat;
 use App\Models\Pengunjung;
 use Carbon\Carbon;
@@ -52,9 +53,10 @@ class PengunjungController extends Controller
     public function edit($id)
     {
 			$data = Pengunjung::with('detail_syarat')->get()->find($id);
+			$detail_keluarga = DetailKeluarga::with('warga_rutan')->where('id_pengunjung', $id)->first();
 			// dd($data);
 
-      return view('officer.pengunjung.edit', compact('data'));
+      return view('officer.pengunjung.edit', compact('data','detail_keluarga'));
     }
 
     public function update(Request $request, $id)

@@ -48,6 +48,7 @@ class RegisteredUserController extends Controller
 					'no_telepon' => 'required|numeric|min:10',
 					'alamat' => 'required',
 					'id_warga_rutan' => 'required|numeric',
+					'status_keluarga' => ['required', 'regex:/^[a-zA-Z ]+$/'],
 					'file_syarat' => 'required|max:10000|mimes:pdf'
         ]);
 
@@ -68,7 +69,7 @@ class RegisteredUserController extends Controller
 					$detail_keluarga = new DetailKeluarga();
 					$detail_keluarga->id_pengunjung = $pengunjung->id_pengunjung;
 					$detail_keluarga->id_warga_rutan = $request->id_warga_rutan;
-					$detail_keluarga->status_keluarga = 'y';
+					$detail_keluarga->status_keluarga = $request->status_keluarga;
 					$detail_keluarga->save();
 
 					$fileNameSyarat = '';

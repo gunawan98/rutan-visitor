@@ -159,7 +159,7 @@ class MainController extends Controller
 					'data_kunjungan' => $data_kunjungan
         ];
         
-        $pdf = Pdf::loadView('kunjunganPDF', $data);  
+        $pdf = Pdf::loadView('kunjunganPDF', $data)->setPaper('f4', 'landscape'); 
 
         return $pdf->download('kunjungan.pdf');
 

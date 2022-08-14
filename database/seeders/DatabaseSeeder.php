@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
 				WargaSeeder::class,
 				DetailKeluargaSeeder::class,
 				JenisSyaratSeeder::class,
-				DetailSyaratSeeder::class
+				DetailSyaratSeeder::class,
+				JadwalKunjunganSeeder::class
 			]);
         // \App\Models\User::factory(10)->create();
 

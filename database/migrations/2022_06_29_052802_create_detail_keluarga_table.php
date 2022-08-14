@@ -22,7 +22,7 @@ return new class extends Migration
 						$table->foreignId('id_warga_rutan');
             $table->foreign('id_warga_rutan')->references('id_warga_rutan')->on('warga_rutan')->onDelete('cascade');
 
-            $table->string('status_keluarga', 2);
+            $table->string('status_keluarga', 45);
 						$table->timestamps();
         });
     }

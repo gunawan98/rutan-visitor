@@ -131,6 +131,10 @@
 									@foreach ($detail_kunjungan->pengunjung->detail_keluarga as $detail_keluarga)
 
 										<div class="row pb-2 g-0">
+											<div class="col-sm-6 col-md-6 fw-bolder">Status Keluarga</div>
+											<div class="col-6 col-md-6 text-muted">: {{$detail_keluarga->status_keluarga}}</div>
+										</div>
+										<div class="row pb-2 g-0">
 											<div class="col-sm-6 col-md-6 fw-bolder">Nomor NIK</div>
 											<div class="col-6 col-md-6 text-muted">: {{$detail_keluarga->warga_rutan->nik}}</div>
 										</div>
