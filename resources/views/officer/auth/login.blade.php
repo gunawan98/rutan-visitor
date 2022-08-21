@@ -7,15 +7,15 @@
 <!-- Validation Errors -->
 @if ($errors->any())
 	<div>
-		<div class="font-medium text-danger">
+		<div class="font-medium">
 				{{ __('Whoops! Something went wrong.') }}
 		</div>
 
-		<ul class="mt-3 list-disc list-inside text-sm text-danger">
+		<!-- <ul class="mt-3 list-disc list-inside text-sm text-danger"> -->
 				@foreach ($errors->all() as $error)
-						<li>{{ $error }}</li>
+						<p class="text-danger">{{ $error }}</p>
 				@endforeach
-		</ul>
+		<!-- </ul> -->
 	</div>
 @endif
 

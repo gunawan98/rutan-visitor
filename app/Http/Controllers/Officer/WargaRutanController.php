@@ -35,6 +35,7 @@ class WargaRutanController extends Controller
 			// ]);
 
 			$warga_rutan = new WargaRutan();
+			$warga_rutan->id_jenis_warga_rutan = $request->id_jenis_warga_rutan;
 			$warga_rutan->nik = $request->nik;
 			$warga_rutan->nama_warga_rutan = $request->nama_warga_rutan;
 			$warga_rutan->alamat = $request->alamat;

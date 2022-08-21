@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
 					'password' => ['required'],
 					'nama_pengunjung' => ['required', 'regex:/^[a-zA-Z ]+$/'],
 					'jenis_kelamin' => ['required', 'in:laki-laki,perempuan'],
-					'no_telepon' => 'required|numeric|min:10',
+					'no_telepon' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:13',
 					'alamat' => 'required',
 					'id_warga_rutan' => 'required|numeric',
 					'status_keluarga' => ['required', 'regex:/^[a-zA-Z ]+$/'],
